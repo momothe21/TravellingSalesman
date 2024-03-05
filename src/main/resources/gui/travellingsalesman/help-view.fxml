@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.travellingsalesman.HelpController" style="-fx-background-color: white;">
+    <Button layoutX="261.0" layoutY="342.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Menu">
+        <font>
+            <Font size="20.0" />
+        </font>
+    </Button>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="34.0" layoutX="27.0" layoutY="67.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+    <Label layoutX="176.0" layoutY="14.0" prefHeight="46.0" prefWidth="247.0" text="Game Information">
+        <font>
+            <Font size="30.0" />
+        </font>
+    </Label>
+    <Label layoutX="73.0" layoutY="76.0" text="Blue tiles contain lost items">
+        <font>
+            <Font size="14.0" />
+        </font></Label>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7ff1f" height="34.0" layoutX="27.0" layoutY="118.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+    <Label layoutX="73.0" layoutY="127.0" text="Yellow tiles represent the castle">
+        <font>
+            <Font size="14.0" />
+        </font></Label>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3fff21" height="34.0" layoutX="27.0" layoutY="168.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+    <Label layoutX="73.0" layoutY="177.0" text="Green tiles contain tresure items">
+        <font>
+            <Font size="14.0" />
+        </font></Label>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#030000" height="34.0" layoutX="27.0" layoutY="215.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+    <Label layoutX="73.0" layoutY="223.0" text="Black tiles are walls">
+        <font>
+            <Font size="14.0" />
+        </font></Label>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff8e00" height="34.0" layoutX="27.0" layoutY="259.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+    <Label layoutX="73.0" layoutY="267.0" text="Orange tiles represent the markets">
+        <font>
+            <Font size="14.0" />
+        </font></Label>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="34.0" layoutX="27.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+    <Label layoutX="73.0" layoutY="313.0" text="Red tiles are traps">
+        <font>
+            <Font size="14.0" />
+        </font></Label>
+    <Label layoutX="380.0" layoutY="61.0" text="Game discription">
+        <font>
+            <Font size="20.0" />
+        </font>
+    </Label>
+    <Label layoutX="299.0" layoutY="87.0" prefHeight="187.0" prefWidth="312.0" text="The game is played as follows: both players start from&#10; the common point by rolling the die to enter the map.&#10; In each turn, a player can move in any direction they &#10;choose. They must search for the announced treasure &#10;(quest) from the computer in each turn. After exploring &#10;the houses and finding the desired treasure, they must &#10;head towards the castle and declare its location. In the &#10;end, after all treasures are found by the traveling &#10;salespeople, the player who has found the most treasures &#10;will be the winner and can become the owner of the game &#10;castle." />
+    <Label layoutX="300.0" layoutY="304.0" text="Weapons:">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
+    <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="380.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@hammer.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="450.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@Bow.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="61.0" fitWidth="78.0" layoutX="515.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@sword.png" />
+        </image>
+    </ImageView>
+</AnchorPane>

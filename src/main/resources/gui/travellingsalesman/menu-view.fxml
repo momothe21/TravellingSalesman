@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="MenuWindow" alignment="CENTER" prefHeight="242.0" prefWidth="275.0" spacing="20.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.travellingsalesman.MenuController">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+  </padding>
+  <children>
+    <Button fx:id="startButton" mnemonicParsing="false" onAction="#switchSceneToGame" text="Start">
+      <font>
+        <Font size="20.0" />
+      </font>
+    </Button>
+    <Button fx:id="helpButton" mnemonicParsing="false" onAction="#switchSceneToHelp" text="Help">
+      <font>
+        <Font size="20.0" />
+      </font>
+    </Button>
+    <Button fx:id="quitButton" mnemonicParsing="false" onAction="#endGame" text="Quit">
+      <font>
+        <Font size="20.0" />
+      </font>
+    </Button>
+  </children>
+</VBox>
