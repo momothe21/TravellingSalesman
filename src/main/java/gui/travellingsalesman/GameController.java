@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +23,11 @@ public class GameController {
     private Stage stage;
     private Parent root;
     private Scene main;
+
+    @FXML
+    private Label Message;
+    @FXML
+    private ImageView diceImage;
     @FXML
     private GridPane mainMap, mainMap1;
     protected Rectangle[][] cells = new Rectangle[10][10];
@@ -130,6 +138,66 @@ public class GameController {
             }
 
         }
+    }
+
+    @FXML
+    //method to roll the dice
+    protected void rollDice(ActionEvent event) throws InterruptedException {
+        //variables
+        Random r = new Random();
+        int rolledNum;
+        Image dice1 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice1.png");
+        Image dice2 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice2.png");
+        Image dice3 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice3.png");
+        Image dice4 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice4.png");
+        Image dice5 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice5.png");
+        Image dice6 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice6.png");
+
+        //getting a number from 1-6
+        rolledNum = r.nextInt(7-1)+1;
+
+        //rolling animation
+        for(int i = 0; i <3; i++){
+            //Thread.sleep(10);
+            diceImage.setImage(dice1);
+            //Thread.sleep(10);
+            diceImage.setImage(dice2);
+            //Thread.sleep(10);
+            diceImage.setImage(dice3);
+            //Thread.sleep(10);
+            diceImage.setImage(dice4);
+            //Thread.sleep(10);
+            diceImage.setImage(dice5);
+            //Thread.sleep(10);
+            diceImage.setImage(dice6);
+        }
+
+        //setting the rolled image
+        switch (rolledNum){
+            case 1:
+                diceImage.setImage(dice1);
+                break;
+            case 2:
+                diceImage.setImage(dice2);
+                break;
+            case 3:
+                diceImage.setImage(dice3);
+                break;
+            case 4:
+                diceImage.setImage(dice4);
+                break;
+            case 5:
+                diceImage.setImage(dice5);
+                break;
+            case 6:
+                diceImage.setImage(dice6);
+                break;
+            default:
+                System.out.println("Error picked a number out of range for dice, exiting...");
+                System.exit(-1);
+                break;
+        }
+        Message.setText("You rolled a "+rolledNum+" Please move that number of tiles to end your turn");
     }
 
     //creating minimaps

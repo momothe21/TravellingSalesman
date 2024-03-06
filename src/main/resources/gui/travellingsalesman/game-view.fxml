@@ -3,58 +3,59 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="gameWindow" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="gameWindow" prefHeight="510.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button layoutX="442.0" layoutY="447.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Quit to Menu">
+        <Button layoutX="513.0" layoutY="447.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Quit to Menu">
             <font>
                 <Font size="20.0" />
             </font>
         </Button>
-        <Label layoutX="443.0" layoutY="368.0" text="Power:">
+        <Label layoutX="514.0" layoutY="368.0" text="Power:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="443.0" layoutY="399.0" text="Wealth:">
+        <Label layoutX="514.0" layoutY="399.0" text="Wealth:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="power" layoutX="507.0" layoutY="368.0" text="0">
+        <Label fx:id="power" layoutX="578.0" layoutY="368.0" text="0">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="wealth" layoutX="507.0" layoutY="399.0" text="0">
+        <Label fx:id="wealth" layoutX="578.0" layoutY="399.0" text="0">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="442.0" layoutY="285.0" text="Quest:">
+        <Label layoutX="512.0" layoutY="278.0" text="Quest:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="quest" layoutX="493.0" layoutY="285.0" text="N/A">
+        <Label fx:id="quest" layoutX="563.0" layoutY="278.0" text="N/A">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="442.0" layoutY="153.0" text="Weapon:">
+        <Label layoutX="513.0" layoutY="153.0" text="Weapon:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <ImageView fx:id="questImage" fitHeight="58.0" fitWidth="54.0" layoutX="454.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="weapon" fitHeight="73.0" fitWidth="63.0" layoutX="451.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true" />
-        <Label layoutX="442.0" layoutY="4.0" text="Current Map:">
+        <ImageView fx:id="questImage" fitHeight="58.0" fitWidth="54.0" layoutX="525.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="weapon" fitHeight="73.0" fitWidth="63.0" layoutX="522.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true" />
+        <Label layoutX="504.0" layoutY="4.0" text="Current Map:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="Message" layoutX="4.0" layoutY="468.0" prefHeight="27.0" prefWidth="430.0">
+        <Label fx:id="Message" layoutX="9.0" layoutY="465.0" prefHeight="27.0" prefWidth="430.0">
             <font>
                 <Font size="18.0" />
             </font>
@@ -87,12 +88,12 @@
         </GridPane>
         <Button fx:id="buy" layoutX="41.0" layoutY="428.0" mnemonicParsing="false" text="Buy" />
         <Button fx:id="MapTurnIn" layoutX="106.0" layoutY="428.0" mnemonicParsing="false" text="Turn in Map to Treasure" />
-        <Label layoutX="266.0" layoutY="429.0" text="LeaderBoard">
+        <Label layoutX="401.0" layoutY="31.0" text="LeaderBoard">
             <font>
-                <Font size="16.0" />
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <GridPane fx:id="mainMap1" gridLinesVisible="true" layoutX="435.0" layoutY="28.0" prefHeight="13.0" prefWidth="90.0">
+        <GridPane fx:id="mainMap1" gridLinesVisible="true" layoutX="534.0" layoutY="31.0" prefHeight="13.0" prefWidth="90.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -118,5 +119,27 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
+      <Rectangle fx:id="commonPoint" fill="#f2dda6" height="35.0" layoutX="428.0" layoutY="344.0" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+      <Rectangle fx:id="commonPoint1" fill="#f2dda6" height="35.0" layoutX="428.0" layoutY="220.0" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+      <Circle fx:id="playerOne" fill="WHITE" layoutX="446.0" layoutY="238.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="playerOne1" layoutX="446.0" layoutY="362.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
+      <Label layoutX="401.0" layoutY="323.0" text="Player 2 Spawn:" />
+      <Label layoutX="401.0" layoutY="196.0" text="Player 1 Spawn:" />
+      <Label layoutX="404.0" layoutY="83.0" text="Player Turn:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="404.0" layoutY="101.0" text="Player 1">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="diceImage" fitHeight="50.0" fitWidth="50.0" layoutX="366.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@dice1.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnDice" layoutX="272.0" layoutY="428.0" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice" />
     </children>
 </AnchorPane>
