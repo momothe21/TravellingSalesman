@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -47,6 +48,12 @@ public class GameController {
     protected ArrayList<Coords> Orangecells = new ArrayList<Coords>();
     protected ArrayList<Coords> Greencells = new ArrayList<Coords>();
     protected ArrayList<Coords> Bluecells = new ArrayList<Coords>();
+
+    //method to roll dice by clicking image
+    @FXML
+    protected void clickDice(MouseEvent event){
+        rollDice();
+    }
 
     //method to create the tiles for the frid map
     @FXML
@@ -207,7 +214,11 @@ public class GameController {
 
     @FXML
     //method to roll the dice
-    protected void rollDice(ActionEvent event) throws InterruptedException {
+    protected void rollDiceBtn(ActionEvent event) throws InterruptedException {
+        rollDice();
+    }
+
+    protected void rollDice(){
         //variables
         Random r = new Random();
 

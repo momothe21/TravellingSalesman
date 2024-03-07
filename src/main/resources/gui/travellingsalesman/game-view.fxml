@@ -135,11 +135,11 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fx:id="diceImage" fitHeight="50.0" fitWidth="50.0" layoutX="366.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="diceImage" fitHeight="50.0" fitWidth="50.0" layoutX="366.0" layoutY="395.0" onMouseClicked="#clickDice" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@dice1.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnDice" layoutX="272.0" layoutY="407.0" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice" />
+      <Button fx:id="btnDice" layoutX="272.0" layoutY="407.0" mnemonicParsing="false" onAction="#rollDiceBtn" text="Roll Dice" />
     </children>
 </AnchorPane>
