@@ -48,6 +48,7 @@ public class GameController {
     protected ArrayList<Coords> Orangecells = new ArrayList<Coords>();
     protected ArrayList<Coords> Greencells = new ArrayList<Coords>();
     protected ArrayList<Coords> Bluecells = new ArrayList<Coords>();
+    protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
 
     //method to roll dice by clicking image
     @FXML
@@ -116,6 +117,7 @@ public class GameController {
                 //setting the castle location
                 if(i==5 && j == 5){
                     cell.setFill(yellow);
+                    Yellowcells.add(new Coords(i,j));
                 }
                 //saving and appending map
                 cells[i][j] = cell;
@@ -162,8 +164,12 @@ public class GameController {
                     if(color1 != yellow){
                         //checking if it overlaps orange
                         if(color1!=blue){
-                            cells[x][y].setFill(green);
-                            Greencells.add(new Coords(x,y));
+                            if((new Coords(x,y)).distanceCalc(Yellowcells)>2){
+                                cells[x][y].setFill(green);
+                                Greencells.add(new Coords(x,y));
+                            }else {
+                                i--;
+                            }
                         }else{
                             i--;
                         }
