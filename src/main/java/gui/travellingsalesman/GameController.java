@@ -1,11 +1,14 @@
+//package
 package gui.travellingsalesman;
 
+//imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,13 +19,20 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
+//game controller
 public class GameController {
     // Attributes and references
     private Stage stage;
     private Parent root;
     private Scene main;
+
+    private int moves;
+
+    @FXML
+    private Button btnDice;
 
     @FXML
     private Label Message;
@@ -32,12 +42,17 @@ public class GameController {
     private GridPane mainMap, mainMap1;
     protected Rectangle[][] cells = new Rectangle[10][10];
 
-    //method to create the tiles
+    protected ArrayList<Coords> Blackcells = new ArrayList<Coords>();
+    protected ArrayList<Coords> Orangecells = new ArrayList<Coords>();
+    protected ArrayList<Coords> Greencells = new ArrayList<Coords>();
+    protected ArrayList<Coords> Bluecells = new ArrayList<Coords>();
+
+    //method to create the tiles for the frid map
     @FXML
     protected void createMap(){
         //variables for random map creation
         Random r = new Random();
-        int color = 0,y,x,z;
+        int color = 0,y,x,bc=0;
         // Create game grid
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -48,27 +63,59 @@ public class GameController {
                 color= r.nextInt(100);
 
                 //random creation
-                if((color >=1 && color <=5)){
-                    cell.setFill(Color.BLACK);
+                //for black
+                if((color >=1 && color <=10)){
+                    //checking distance between blacks
+                    if(bc>0&&((new Coords(i,j)).distanceCalc(Blackcells)>1)){
+                        cell.setFill(Color.BLACK);
+                        Blackcells.add(new Coords(i,j));
+                        bc++;
+                    }else if(bc == 0){
+                        cell.setFill(Color.BLACK);
+                        Blackcells.add(new Coords(i,j));
+                        bc++;
+                    }else{
+                        //setting it to default free space
+                        cell.setFill(Color.rgb(242,221,166));
+                    }
+                    //setting traps
                 }else if (color>=32 && color<=38) {
                     cell.setFill(Color.RED);
                 }else {
+                    //default
                     cell.setFill(Color.rgb(242,221,166));
                 }
+                //setting the castle location
                 if(i==5 && j == 5){
                     cell.setFill(Color.GOLD);
                 }
-                //saving and appending
+                //saving and appending map
                 cells[i][j] = cell;
                 mainMap.add(cell, i, j);
             }
         }
+        //adding unique parameter elements
+        //putting orange cells
         for(int i = 0; i<5; i++){
             y = r.nextInt(10-1)+1;
             x = r.nextInt(10-1)+1;
-            if(y!=5){
-                if(cells[y][x].getFill()!=Color.ORANGE){
-                    cells[y][x].setFill(Color.ORANGE);
+
+            //checking distance of oranges
+            if((new Coords(x,y)).distanceCalc(Orangecells)>2){
+                //checking it is not overlapping with black
+                if(cells[x][y].getFill() != Color.BLACK){
+                    //making sure it is not overlapping the castle
+                    if(cells[x][y].getFill() != Color.GOLD){
+                        //making sure it is not overlapping the oranges
+                        if(cells[x][y].getFill()!=Color.ORANGE){
+                            cells[x][y].setFill(Color.ORANGE);
+                            Orangecells.add(new Coords(x,y));
+                        }else{
+                            i--;
+                        }
+                    }else{
+                        i--;
+                    }
                 }else{
                     i--;
                 }
@@ -76,14 +123,67 @@ public class GameController {
                 i--;
             }
         }
+
+        //putting Blue cells
         for(int i = 0; i<13; i++){
             y = r.nextInt(10-1)+1;
             x = r.nextInt(10-1)+1;
-            if(y!=5){
-                if(cells[y][x].getFill()!=Color.ORANGE){
-                    if(cells[y][x].getFill()!=Color.BLUE){
-                        cells[y][x].setFill(Color.BLUE);
+            //checking distance between blues
+            if((new Coords(x,y)).distanceCalc(Bluecells)>1){
+                //checking if it is overlapping with black
+                if(cells[x][y].getFill() != Color.BLACK){
+                    //checking if it is overlapping with the castle
+                    if(cells[x][y].getFill() != Color.GOLD){
+                        //checking if it overlaps orange
+                        if(cells[x][y].getFill()!=Color.ORANGE){
+                            //checking if it is overlapping blues
+                            if(cells[x][y].getFill()!=Color.BLUE){
+                                cells[x][y].setFill(Color.BLUE);
+                                Bluecells.add(new Coords(x,y));
+                            }else{
+                                i--;
+                            }
+                        }else{
+                            i--;
+                        }
                     }else{
+                        i--;
+                    }
+                }else{
+                    i--;
+                }
+            }else {
+                i--;
+            }
+        }
+        //putting green cells
+        for(int i = 0; i<8; i++) {
+            y = r.nextInt(10 - 1) + 1;
+            x = r.nextInt(10 - 1) + 1;
+            //checking the distance of greens
+            if((new Coords(x,y)).distanceCalc(Greencells)>2){
+                //checking if it is overlapping the blacks
+                if(cells[x][y].getFill() != Color.BLACK){
+                    //checking if it is overlapping with the castle
+                    if (cells[x][y].getFill() != Color.GOLD) {
+                        //checking if it overlaps the oranges
+                        if (cells[x][y].getFill() != Color.ORANGE) {
+                            //checking if it overlaps the blues
+                            if (cells[x][y].getFill() != Color.BLUE) {
+                                //checking if it overlaps the greens
+                                if (cells[x][y].getFill() != Color.GREEN) {
+                                    cells[x][y].setFill(Color.GREEN);
+                                    Greencells.add(new Coords(x,y));
+                                } else {
+                                    i--;
+                                }
+                            } else {
+                                i--;
+                            }
+                        } else {
+                            i--;
+                        }
+                    } else {
                         i--;
                     }
                 }else{
@@ -92,51 +192,6 @@ public class GameController {
             }else{
                 i--;
             }
-        }
-        for(int i = 0; i<8; i++){
-            z = r.nextInt(2);
-            if(z==1){
-                y = r.nextInt(10-1)+1;
-                x = r.nextInt(8-1)+1;
-                if(y!=5){
-                    if(cells[y][2+x].getFill()!=Color.ORANGE){
-                        if(cells[y][2+x].getFill()!=Color.BLUE){
-                            if(cells[y][2+x].getFill()!=Color.GREEN){
-                                cells[y][2+x].setFill(Color.GREEN);
-                            }else{
-                                i--;
-                            }
-                        }else{
-                            i--;
-                        }
-                    }else{
-                        i--;
-                    }
-                }else{
-                    i--;
-                }
-            }else{
-                x = r.nextInt(10-1)+1;
-                y = r.nextInt(8-1)+1;
-                if(y!=5){
-                    if(cells[y][x].getFill()!=Color.ORANGE){
-                        if(cells[y][x].getFill()!=Color.BLUE){
-                            if(cells[y][x].getFill()!=Color.GREEN){
-                                cells[y][x].setFill(Color.GREEN);
-                            }else{
-                                i--;
-                            }
-                        }else{
-                            i--;
-                        }
-                    }else{
-                        i--;
-                    }
-                }else{
-                    i--;
-                }
-            }
-
         }
     }
 
@@ -145,6 +200,8 @@ public class GameController {
     protected void rollDice(ActionEvent event) throws InterruptedException {
         //variables
         Random r = new Random();
+
+        btnDice.setDisable(true);
         int rolledNum;
         Image dice1 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice1.png");
         Image dice2 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice2.png");
@@ -155,22 +212,8 @@ public class GameController {
 
         //getting a number from 1-6
         rolledNum = r.nextInt(7-1)+1;
+        moves = rolledNum;
 
-        //rolling animation
-        for(int i = 0; i <3; i++){
-            //Thread.sleep(10);
-            diceImage.setImage(dice1);
-            //Thread.sleep(10);
-            diceImage.setImage(dice2);
-            //Thread.sleep(10);
-            diceImage.setImage(dice3);
-            //Thread.sleep(10);
-            diceImage.setImage(dice4);
-            //Thread.sleep(10);
-            diceImage.setImage(dice5);
-            //Thread.sleep(10);
-            diceImage.setImage(dice6);
-        }
 
         //setting the rolled image
         switch (rolledNum){
@@ -197,7 +240,8 @@ public class GameController {
                 System.exit(-1);
                 break;
         }
-        Message.setText("You rolled a "+rolledNum+" Please move that number of tiles to end your turn");
+        Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
+        btnDice.setDisable(false);
     }
 
     //creating minimaps

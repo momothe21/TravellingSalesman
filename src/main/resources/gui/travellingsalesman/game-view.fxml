@@ -55,7 +55,7 @@
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="Message" layoutX="9.0" layoutY="465.0" prefHeight="27.0" prefWidth="430.0">
+        <Label fx:id="Message" layoutX="9.0" layoutY="444.0" prefHeight="49.0" prefWidth="479.0">
             <font>
                 <Font size="18.0" />
             </font>
@@ -86,8 +86,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-        <Button fx:id="buy" layoutX="41.0" layoutY="428.0" mnemonicParsing="false" text="Buy" />
-        <Button fx:id="MapTurnIn" layoutX="106.0" layoutY="428.0" mnemonicParsing="false" text="Turn in Map to Treasure" />
+        <Button fx:id="buy" layoutX="41.0" layoutY="407.0" mnemonicParsing="false" text="Buy" />
+        <Button fx:id="MapTurnIn" layoutX="106.0" layoutY="407.0" mnemonicParsing="false" text="Turn in Map to Treasure" />
         <Label layoutX="401.0" layoutY="31.0" text="LeaderBoard">
             <font>
                 <Font name="System Bold" size="16.0" />
@@ -135,11 +135,11 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fx:id="diceImage" fitHeight="50.0" fitWidth="50.0" layoutX="366.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="diceImage" fitHeight="50.0" fitWidth="50.0" layoutX="366.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@dice1.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnDice" layoutX="272.0" layoutY="428.0" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice" />
+      <Button fx:id="btnDice" layoutX="272.0" layoutY="407.0" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice" />
     </children>
 </AnchorPane>
