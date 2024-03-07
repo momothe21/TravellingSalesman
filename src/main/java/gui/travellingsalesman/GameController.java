@@ -51,13 +51,8 @@ public class GameController {
     protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Redcells = new ArrayList<Coords>();
 
-    //method to roll dice by clicking image
-    @FXML
-    protected void clickDice(MouseEvent event){
-        rollDice();
-    }
-
     //method to create the tiles for the frid map
+
     @FXML
     protected void createMap(){
         //variables for random map creation
@@ -223,10 +218,16 @@ public class GameController {
             }
         }
     }
-
+    //method to roll dice using btn
     @FXML
     //method to roll the dice
     protected void rollDiceBtn(ActionEvent event) throws InterruptedException {
+        rollDice();
+    }
+
+    //method to roll dice by clicking image
+    @FXML
+    protected void clickDice(MouseEvent event){
         rollDice();
     }
 
