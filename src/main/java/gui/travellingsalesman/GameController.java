@@ -49,6 +49,7 @@ public class GameController {
     protected ArrayList<Coords> Greencells = new ArrayList<Coords>();
     protected ArrayList<Coords> Bluecells = new ArrayList<Coords>();
     protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
+    protected ArrayList<Coords> Redcells = new ArrayList<Coords>();
 
     //method to roll dice by clicking image
     @FXML
@@ -108,8 +109,9 @@ public class GameController {
                         cell.setFill(free);
                     }
                     //setting traps
-                }else if (color>=32 && color<=38) {
+                }else if (color>=32 && color<=42) {
                     cell.setFill(red);
+                    Redcells.add(new Coords(i,j));
                 }else {
                     //default
                     cell.setFill(free);
@@ -122,7 +124,7 @@ public class GameController {
                 //saving and appending map
                 cells[i][j] = cell;
                 mainMap.add(cell, i, j);
-            }
+            }//FileC:\Users\moham_my0tjcn\IdeaProjects\TravellingSalesman\src\main\resources\gui\travellingsalesman\dice3.png
         }
         //adding unique parameter elements
         //putting 13 Blue cells
@@ -137,9 +139,13 @@ public class GameController {
                 if(color1 != black){
                     //making sure it is not overlapping the castle
                     if(color1 != yellow){
-                        //assigning blues
-                        cells[x][y].setFill(blue);
-                        Bluecells.add(new Coords(x,y));
+                        if((new Coords(x,y)).distanceCalc(Yellowcells)>1){
+                            //assigning blues
+                            cells[x][y].setFill(blue);
+                            Bluecells.add(new Coords(x,y));
+                        }else{
+                            i--;
+                        }
                     }else{
                         i--;
                     }
@@ -230,6 +236,8 @@ public class GameController {
 
         btnDice.setDisable(true);
         int rolledNum;
+
+        //File is loaded absolute needs to be relative
         Image dice1 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice1.png");
         Image dice2 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice2.png");
         Image dice3 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice3.png");

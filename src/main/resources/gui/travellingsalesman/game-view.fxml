@@ -13,22 +13,22 @@
                 <Font size="20.0" />
             </font>
         </Button>
-        <Label layoutX="514.0" layoutY="368.0" text="Power:">
+        <Label layoutX="514.0" layoutY="353.0" text="Power:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="514.0" layoutY="399.0" text="Wealth:">
+        <Label layoutX="514.0" layoutY="384.0" text="Wealth:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="power" layoutX="578.0" layoutY="368.0" text="0">
+        <Label fx:id="power" layoutX="578.0" layoutY="353.0" text="0">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="wealth" layoutX="578.0" layoutY="399.0" text="0">
+        <Label fx:id="wealth" layoutX="578.0" layoutY="384.0" text="0">
             <font>
                 <Font size="16.0" />
             </font>
@@ -141,5 +141,15 @@
          </image>
       </ImageView>
       <Button fx:id="btnDice" layoutX="272.0" layoutY="407.0" mnemonicParsing="false" onAction="#rollDiceBtn" text="Roll Dice" />
+      <Label layoutX="514.0" layoutY="411.0" text="Score:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="Score" layoutX="578.0" layoutY="411.0" text="0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

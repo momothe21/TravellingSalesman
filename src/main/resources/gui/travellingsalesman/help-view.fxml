@@ -28,7 +28,7 @@
             <Font size="14.0" />
         </font></Label>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3fff21" height="34.0" layoutX="27.0" layoutY="168.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
-    <Label layoutX="73.0" layoutY="177.0" text="Green tiles contain tresure items">
+    <Label layoutX="73.0" layoutY="177.0" text="Green tiles contain treasure items">
         <font>
             <Font size="14.0" />
         </font></Label>
