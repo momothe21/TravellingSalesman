@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,7 +20,7 @@ public class HelpController {
     private Parent root;
     private Scene main;
     @FXML
-    private VBox infoWindow;
+    private AnchorPane infoWindow;
 
     //method to change background color(testing)
     @FXML
