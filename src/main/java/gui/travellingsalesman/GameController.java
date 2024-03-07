@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -53,6 +54,26 @@ public class GameController {
         //variables for random map creation
         Random r = new Random();
         int color = 0,y,x,bc=0;
+
+        //colours
+        //Two light schemes for user preference(as part of phase 3 maybe)
+        //light mode
+//        Paint black=Color.BLACK;
+//        Paint blue=Color.rgb(30,144,255);
+//        Paint green=Color.rgb(63,255,33);
+//        Paint free=Color.rgb(242,221,166);
+//        Paint orange=Color.rgb(255,142,0);
+//        Paint yellow=Color.rgb(231,255,31);
+//        Paint red = Color.rgb(255,0,0);
+        //dark mode
+        Paint black=Color.BLACK;
+        Paint blue=Color.BLUE;
+        Paint green=Color.GREEN;
+        Paint free=Color.rgb(242,221,166);
+        Paint orange=Color.ORANGE;
+        Paint yellow=Color.GOLD;
+        Paint red = Color.RED;
+
         // Create game grid
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -67,27 +88,27 @@ public class GameController {
                 if((color >=1 && color <=10)){
                     //checking distance between blacks
                     if(bc>0&&((new Coords(i,j)).distanceCalc(Blackcells)>1)){
-                        cell.setFill(Color.BLACK);
+                        cell.setFill(black);
                         Blackcells.add(new Coords(i,j));
                         bc++;
                     }else if(bc == 0){
-                        cell.setFill(Color.BLACK);
+                        cell.setFill(black);
                         Blackcells.add(new Coords(i,j));
                         bc++;
                     }else{
                         //setting it to default free space
-                        cell.setFill(Color.rgb(242,221,166));
+                        cell.setFill(free);
                     }
                     //setting traps
                 }else if (color>=32 && color<=38) {
-                    cell.setFill(Color.RED);
+                    cell.setFill(red);
                 }else {
                     //default
-                    cell.setFill(Color.rgb(242,221,166));
+                    cell.setFill(free);
                 }
                 //setting the castle location
                 if(i==5 && j == 5){
-                    cell.setFill(Color.GOLD);
+                    cell.setFill(yellow);
                 }
                 //saving and appending map
                 cells[i][j] = cell;
@@ -95,24 +116,21 @@ public class GameController {
             }
         }
         //adding unique parameter elements
-        //putting orange cells
-        for(int i = 0; i<5; i++){
+        //putting 13 Blue cells
+        for(int i = 0; i<13; i++){
             y = r.nextInt(10-1)+1;
             x = r.nextInt(10-1)+1;
+            Paint color1 = cells[x][y].getFill();
 
-            //checking distance of oranges
-            if((new Coords(x,y)).distanceCalc(Orangecells)>2){
+            //checking if blues overlap
+            if(color1 != blue){
                 //checking it is not overlapping with black
-                if(cells[x][y].getFill() != Color.BLACK){
+                if(color1 != black){
                     //making sure it is not overlapping the castle
-                    if(cells[x][y].getFill() != Color.GOLD){
-                        //making sure it is not overlapping the oranges
-                        if(cells[x][y].getFill()!=Color.ORANGE){
-                            cells[x][y].setFill(Color.ORANGE);
-                            Orangecells.add(new Coords(x,y));
-                        }else{
-                            i--;
-                        }
+                    if(color1 != yellow){
+                        //assigning blues
+                        cells[x][y].setFill(blue);
+                        Bluecells.add(new Coords(x,y));
                     }else{
                         i--;
                     }
@@ -124,25 +142,21 @@ public class GameController {
             }
         }
 
-        //putting Blue cells
-        for(int i = 0; i<13; i++){
+        //putting 8 green cells
+        for(int i = 0; i<8; i++){
             y = r.nextInt(10-1)+1;
             x = r.nextInt(10-1)+1;
-            //checking distance between blues
-            if((new Coords(x,y)).distanceCalc(Bluecells)>1){
+            Paint color1 = cells[x][y].getFill();
+            //checking distance between greens
+            if((new Coords(x,y)).distanceCalc(Greencells)>1){
                 //checking if it is overlapping with black
-                if(cells[x][y].getFill() != Color.BLACK){
+                if(color1 != black){
                     //checking if it is overlapping with the castle
-                    if(cells[x][y].getFill() != Color.GOLD){
+                    if(color1 != yellow){
                         //checking if it overlaps orange
-                        if(cells[x][y].getFill()!=Color.ORANGE){
-                            //checking if it is overlapping blues
-                            if(cells[x][y].getFill()!=Color.BLUE){
-                                cells[x][y].setFill(Color.BLUE);
-                                Bluecells.add(new Coords(x,y));
-                            }else{
-                                i--;
-                            }
+                        if(color1!=blue){
+                            cells[x][y].setFill(green);
+                            Greencells.add(new Coords(x,y));
                         }else{
                             i--;
                         }
@@ -156,27 +170,23 @@ public class GameController {
                 i--;
             }
         }
-        //putting green cells
-        for(int i = 0; i<8; i++) {
+        //putting 5 Orange cells
+        for(int i = 0; i<5; i++) {
             y = r.nextInt(10 - 1) + 1;
             x = r.nextInt(10 - 1) + 1;
-            //checking the distance of greens
-            if((new Coords(x,y)).distanceCalc(Greencells)>2){
+            Paint color1 = cells[x][y].getFill();
+            //checking the distance of oranges
+            if((new Coords(x,y)).distanceCalc(Orangecells)>1){
                 //checking if it is overlapping the blacks
-                if(cells[x][y].getFill() != Color.BLACK){
+                if(color1 != black){
                     //checking if it is overlapping with the castle
-                    if (cells[x][y].getFill() != Color.GOLD) {
+                    if (color1 != yellow) {
                         //checking if it overlaps the oranges
-                        if (cells[x][y].getFill() != Color.ORANGE) {
+                        if (color1 != green) {
                             //checking if it overlaps the blues
-                            if (cells[x][y].getFill() != Color.BLUE) {
-                                //checking if it overlaps the greens
-                                if (cells[x][y].getFill() != Color.GREEN) {
-                                    cells[x][y].setFill(Color.GREEN);
-                                    Greencells.add(new Coords(x,y));
-                                } else {
-                                    i--;
-                                }
+                            if (color1 != blue) {
+                                cells[x][y].setFill(orange);
+                                Orangecells.add(new Coords(x,y));
                             } else {
                                 i--;
                             }
