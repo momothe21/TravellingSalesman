@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="gameWindow" prefHeight="510.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button fx:id="ReturntoMenu" layoutX="513.0" layoutY="447.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Quit to Menu">
+        <Button fx:id="ReturntoMenu" focusTraversable="false" layoutX="513.0" layoutY="447.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Quit to Menu">
             <font>
                 <Font size="20.0" />
             </font>
@@ -60,7 +60,7 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <GridPane fx:id="mainMap" alignment="CENTER" gridLinesVisible="true" hgap="1.0" layoutX="25.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="365.0" vgap="1.0">
+        <GridPane fx:id="mainMap" alignment="CENTER" gridLinesVisible="true" hgap="1.0" layoutX="25.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#inp" onMouseClicked="#clickSpawn" prefHeight="365.0" prefWidth="365.0" vgap="1.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -86,8 +86,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-        <Button fx:id="buy" layoutX="41.0" layoutY="407.0" mnemonicParsing="false" text="Buy" />
-        <Button fx:id="MapTurnIn" layoutX="106.0" layoutY="407.0" mnemonicParsing="false" text="Turn in Map to Treasure" />
+        <Button fx:id="buy" focusTraversable="false" layoutX="41.0" layoutY="407.0" mnemonicParsing="false" text="Buy" />
+        <Button fx:id="MapTurnIn" focusTraversable="false" layoutX="106.0" layoutY="407.0" mnemonicParsing="false" text="Turn in Map to Treasure" />
         <Label layoutX="401.0" layoutY="31.0" text="LeaderBoard">
             <font>
                 <Font name="System Bold" size="16.0" />
@@ -121,7 +121,7 @@
         </GridPane>
       <Rectangle fx:id="commonPoint" fill="#f2dda6" height="35.0" layoutX="428.0" layoutY="344.0" stroke="BLACK" strokeType="INSIDE" width="35.0" />
       <Rectangle fx:id="commonPoint1" fill="#f2dda6" height="35.0" layoutX="428.0" layoutY="220.0" stroke="BLACK" strokeType="INSIDE" width="35.0" />
-      <Circle fx:id="playerOne" fill="WHITE" layoutX="446.0" layoutY="238.0" onMouseClicked="#clickSpawn" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="playerOne" fill="WHITE" layoutX="446.0" layoutY="238.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="playerTwo" layoutX="446.0" layoutY="362.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
       <Label layoutX="401.0" layoutY="323.0" text="Player 2 Spawn:" />
       <Label layoutX="401.0" layoutY="196.0" text="Player 1 Spawn:" />
@@ -140,7 +140,7 @@
             <Image url="@dice1.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnDice" layoutX="272.0" layoutY="407.0" mnemonicParsing="false" onAction="#rollDiceBtn" text="Roll Dice" />
+      <Button fx:id="btnDice" focusTraversable="false" layoutX="272.0" layoutY="407.0" mnemonicParsing="false" onAction="#rollDiceBtn" text="Roll Dice" />
       <Label layoutX="514.0" layoutY="411.0" text="Score:">
          <font>
             <Font size="16.0" />

@@ -110,7 +110,7 @@ public class GameController {
                 color= r.nextInt(100);
 
                 //making sure to leave spawn points alone
-                if((new Coords(i,j)).distanceCalc(Playerspawn)>0){
+                if((new Coords(i,j)).distanceCalc(Playerspawn)>1){
                     //random creation
                     //for black
                     if((color >=1 && color <=10)){
@@ -271,12 +271,6 @@ public class GameController {
         rollDice();
     }
 
-    //method to spawn
-    @FXML
-    protected void clickSpawn(MouseEvent event){
-        player1.spawn(mainMap);
-    }
-
     protected void rollDice(){
         //variables
         Random r = new Random();
@@ -367,6 +361,34 @@ public class GameController {
         stage.setScene(main);
         stage.show();
     }
+
+    //method to spawn players using a click
+    @FXML
+    protected void clickSpawn(MouseEvent event){
+        spawning();
+    }
+
+    //to spawn player into map
+    protected void spawning(){
+        if(mainMap.getChildren().contains(player1.getSelf())){
+            player2.spawn(mainMap);
+        }else{
+            player1.spawn(mainMap);
+        }
+    }
+
+    //method to take keyboard input
+    @FXML
+    public void inp(){
+        mainMap.requestFocus();
+        mainMap.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                System.out.println(keyEvent.getCode());
+            }
+        });
+    }
+
 
     //setters and getters
     public Label getMessage() {

@@ -3,7 +3,6 @@ package gui.travellingsalesman;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -17,25 +16,46 @@ public class Player{
     private int wealth;
     private double power;
     private Weapons weapon;
+    private GridPane map;
 
     private Circle self;
 
     private int moves;
 
+    //method to move player
+    protected void move(int X, int Y){
+        int newX = getPlayerCoords().getX() + X;
+        int newY = getPlayerCoords().getY() + Y;
+
+        if(newX <= 9|| newX >=0){
+            if(newY <=9||newY >= 0){
+                setPlayerCoords(new Coords(newX,newY));
+                if(getSelf() == null){
+                    System.out.println("The player circle is null for some reason");
+                }else {
+                    map.add(getSelf(),getPlayerCoords().getX(),getPlayerCoords().getY());
+                }
+            }
+        }
+    }
+
     //method to move player to spawn
     @FXML
     protected void spawn(GridPane main){
+        //setting the map when spawning
+        map = main;
+
         if(getPlayerCoords().getX()<0){
-            if(playernum==1){
+            if(playernum%2!=0){
                 setPlayerCoords(new Coords(0,0));
             }else {
                 setPlayerCoords(new Coords(9,9));
             }
-        }
-        if(getSelf() == null){
-            System.out.println("The player circle is null for some reason");
-        }else {
-            main.add(getSelf(),getPlayerCoords().getX(),getPlayerCoords().getY());
+            if(getSelf() == null){
+                System.out.println("The player circle is null for some reason");
+            }else {
+                map.add(getSelf(),getPlayerCoords().getX(),getPlayerCoords().getY());
+            }
         }
     }
 

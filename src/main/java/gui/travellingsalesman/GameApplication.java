@@ -37,7 +37,6 @@ public class GameApplication extends Application {
         stage.show();
     }
 
-
     //launching the code through the application launch method
     public static void main(String[] args) {
         launch();
