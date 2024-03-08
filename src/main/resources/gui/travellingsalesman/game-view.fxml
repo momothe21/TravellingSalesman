@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="gameWindow" prefHeight="510.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button layoutX="513.0" layoutY="447.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Quit to Menu">
+        <Button fx:id="ReturntoMenu" layoutX="513.0" layoutY="447.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Quit to Menu">
             <font>
                 <Font size="20.0" />
             </font>
@@ -121,8 +121,8 @@
         </GridPane>
       <Rectangle fx:id="commonPoint" fill="#f2dda6" height="35.0" layoutX="428.0" layoutY="344.0" stroke="BLACK" strokeType="INSIDE" width="35.0" />
       <Rectangle fx:id="commonPoint1" fill="#f2dda6" height="35.0" layoutX="428.0" layoutY="220.0" stroke="BLACK" strokeType="INSIDE" width="35.0" />
-      <Circle fx:id="playerOne" fill="WHITE" layoutX="446.0" layoutY="238.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="playerOne1" layoutX="446.0" layoutY="362.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="playerOne" fill="WHITE" layoutX="446.0" layoutY="238.0" onMouseClicked="#clickSpawn" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="playerTwo" layoutX="446.0" layoutY="362.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
       <Label layoutX="401.0" layoutY="323.0" text="Player 2 Spawn:" />
       <Label layoutX="401.0" layoutY="196.0" text="Player 1 Spawn:" />
       <Label layoutX="404.0" layoutY="83.0" text="Player Turn:">

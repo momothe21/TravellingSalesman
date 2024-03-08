@@ -66,6 +66,8 @@ public class MenuController {
         //making map
         gameController.createMap();
         gameController.createMiniMap();
+        gameController.setCircleParent();
+        gameController.getMessage().setText("Roll the dice to get moves for your player.\nPress space to enter the map.");
 
     }
 

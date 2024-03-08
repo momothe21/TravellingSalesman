@@ -3,6 +3,7 @@ package gui.travellingsalesman;
 
 //imports
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,10 +13,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -34,6 +39,14 @@ public class GameController {
     private int moves;
 
     @FXML
+    private Button ReturntoMenu;
+
+    @FXML
+    private Circle playerOne;
+    @FXML
+    private Circle playerTwo;
+
+    @FXML
     private Button btnDice;
 
     @FXML
@@ -50,6 +63,11 @@ public class GameController {
     protected ArrayList<Coords> Bluecells = new ArrayList<Coords>();
     protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Redcells = new ArrayList<Coords>();
+    protected ArrayList<Coords> Playerspawn = new ArrayList<Coords>();
+    @FXML
+    protected Player player1;
+    @FXML
+    protected Player player2;
 
     //method to create the tiles for the frid map
 
@@ -78,6 +96,10 @@ public class GameController {
         Paint yellow=Color.GOLD;
         Paint red = Color.RED;
 
+        //player spawns
+        Playerspawn.add(new Coords(0,0));
+        Playerspawn.add(new Coords(9,9));
+
         // Create game grid
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -87,39 +109,45 @@ public class GameController {
                 //random number
                 color= r.nextInt(100);
 
-                //random creation
-                //for black
-                if((color >=1 && color <=10)){
-                    //checking distance between blacks
-                    if(bc>0&&((new Coords(i,j)).distanceCalc(Blackcells)>1)){
-                        cell.setFill(black);
-                        Blackcells.add(new Coords(i,j));
-                        bc++;
-                    }else if(bc == 0){
-                        cell.setFill(black);
-                        Blackcells.add(new Coords(i,j));
-                        bc++;
-                    }else{
-                        //setting it to default free space
+                //making sure to leave spawn points alone
+                if((new Coords(i,j)).distanceCalc(Playerspawn)>0){
+                    //random creation
+                    //for black
+                    if((color >=1 && color <=10)){
+                        //checking distance between blacks
+                        if(bc>0&&((new Coords(i,j)).distanceCalc(Blackcells)>1)){
+                            cell.setFill(black);
+                            Blackcells.add(new Coords(i,j));
+                            bc++;
+                        }else if(bc == 0){
+                            cell.setFill(black);
+                            Blackcells.add(new Coords(i,j));
+                            bc++;
+                        }else{
+                            //setting it to default free space
+                            cell.setFill(free);
+                        }
+                        //setting traps
+                    }else if (color>=32 && color<=42) {
+                        cell.setFill(red);
+                        Redcells.add(new Coords(i,j));
+                    }else {
+                        //default
                         cell.setFill(free);
                     }
-                    //setting traps
-                }else if (color>=32 && color<=42) {
-                    cell.setFill(red);
-                    Redcells.add(new Coords(i,j));
-                }else {
-                    //default
+                    //setting the castle location
+                    if(i==5 && j == 5){
+                        cell.setFill(yellow);
+                        Yellowcells.add(new Coords(i,j));
+                    }
+                }else{
                     cell.setFill(free);
                 }
-                //setting the castle location
-                if(i==5 && j == 5){
-                    cell.setFill(yellow);
-                    Yellowcells.add(new Coords(i,j));
-                }
+
                 //saving and appending map
                 cells[i][j] = cell;
                 mainMap.add(cell, i, j);
-            }//FileC:\Users\moham_my0tjcn\IdeaProjects\TravellingSalesman\src\main\resources\gui\travellingsalesman\dice3.png
+            }
         }
         //adding unique parameter elements
         //putting 13 Blue cells
@@ -135,9 +163,13 @@ public class GameController {
                     //making sure it is not overlapping the castle
                     if(color1 != yellow){
                         if((new Coords(x,y)).distanceCalc(Yellowcells)>1){
-                            //assigning blues
-                            cells[x][y].setFill(blue);
-                            Bluecells.add(new Coords(x,y));
+                            if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
+                                //assigning blues
+                                cells[x][y].setFill(blue);
+                                Bluecells.add(new Coords(x,y));
+                            }else{
+                                i--;
+                            }
                         }else{
                             i--;
                         }
@@ -166,8 +198,12 @@ public class GameController {
                         //checking if it overlaps orange
                         if(color1!=blue){
                             if((new Coords(x,y)).distanceCalc(Yellowcells)>2){
-                                cells[x][y].setFill(green);
-                                Greencells.add(new Coords(x,y));
+                                if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
+                                    cells[x][y].setFill(green);
+                                    Greencells.add(new Coords(x,y));
+                                }else{
+                                    i--;
+                                }
                             }else {
                                 i--;
                             }
@@ -199,8 +235,12 @@ public class GameController {
                         if (color1 != green) {
                             //checking if it overlaps the blues
                             if (color1 != blue) {
-                                cells[x][y].setFill(orange);
-                                Orangecells.add(new Coords(x,y));
+                                if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
+                                    cells[x][y].setFill(orange);
+                                    Orangecells.add(new Coords(x,y));
+                                }else{
+                                    i--;
+                                }
                             } else {
                                 i--;
                             }
@@ -229,6 +269,12 @@ public class GameController {
     @FXML
     protected void clickDice(MouseEvent event){
         rollDice();
+    }
+
+    //method to spawn
+    @FXML
+    protected void clickSpawn(MouseEvent event){
+        player1.spawn(mainMap);
     }
 
     protected void rollDice(){
@@ -294,6 +340,23 @@ public class GameController {
         }
     }
 
+    //method to assign player to a circle to highlight the two players
+    @FXML
+    protected void setCircleParent(){
+        //making player icons
+        ImagePattern temp1 = new ImagePattern(new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/icon.png"));
+        ImagePattern temp2 = new ImagePattern(new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/Player2.png"));
+
+        //putting background for them
+        playerOne.setFill(temp1);
+        playerTwo.setFill(temp2);
+
+        //creating the players as well
+        player1 = new Player(playerOne,new Coords(-1,-1));
+        player2 = new Player(playerTwo,new Coords(-2,-2));
+    }
+
+
     //method to go back to menu
     @FXML
     protected void switchSceneToMenu(ActionEvent event) throws IOException {
@@ -303,5 +366,102 @@ public class GameController {
         main = new Scene(root);
         stage.setScene(main);
         stage.show();
+    }
+
+    //setters and getters
+    public Label getMessage() {
+        return Message;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+    public void setMoves(int moves) {
+        this.moves = moves;
+    }
+
+    public Circle getPlayerOne() {
+        return playerOne;
+    }
+
+    public void setPlayerOne(Circle playerOne) {
+        this.playerOne = playerOne;
+    }
+
+    public Circle getPlayerTwo() {
+        return playerTwo;
+    }
+
+    public void setPlayerTwo(Circle playerTwo) {
+        this.playerTwo = playerTwo;
+    }
+
+    public Rectangle[][] getCells() {
+        return cells;
+    }
+
+    public void setCells(Rectangle[][] cells) {
+        this.cells = cells;
+    }
+
+    public ArrayList<Coords> getBlackcells() {
+        return Blackcells;
+    }
+
+    public void setBlackcells(ArrayList<Coords> blackcells) {
+        Blackcells = blackcells;
+    }
+
+    public ArrayList<Coords> getOrangecells() {
+        return Orangecells;
+    }
+
+    public void setOrangecells(ArrayList<Coords> orangecells) {
+        Orangecells = orangecells;
+    }
+
+    public ArrayList<Coords> getGreencells() {
+        return Greencells;
+    }
+
+    public void setGreencells(ArrayList<Coords> greencells) {
+        Greencells = greencells;
+    }
+
+    public ArrayList<Coords> getBluecells() {
+        return Bluecells;
+    }
+
+    public void setBluecells(ArrayList<Coords> bluecells) {
+        Bluecells = bluecells;
+    }
+
+    public ArrayList<Coords> getYellowcells() {
+        return Yellowcells;
+    }
+
+    public void setYellowcells(ArrayList<Coords> yellowcells) {
+        Yellowcells = yellowcells;
+    }
+
+    public ArrayList<Coords> getRedcells() {
+        return Redcells;
+    }
+
+    public void setRedcells(ArrayList<Coords> redcells) {
+        Redcells = redcells;
+    }
+
+    public ArrayList<Coords> getPlayerspawn() {
+        return Playerspawn;
+    }
+
+    public void setPlayerspawn(ArrayList<Coords> playerspawn) {
+        Playerspawn = playerspawn;
+    }
+
+    public GridPane getMainMap() {
+        return mainMap;
     }
 }
