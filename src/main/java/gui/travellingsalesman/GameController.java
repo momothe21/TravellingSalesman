@@ -36,7 +36,9 @@ public class GameController {
     private Parent root;
     private Scene main;
 
-    private int moves;
+    private int moves, rolledNum;
+
+    private int turns;
 
     @FXML
     private Button ReturntoMenu;
@@ -64,6 +66,8 @@ public class GameController {
     protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Redcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Playerspawn = new ArrayList<Coords>();
+    @FXML
+    protected Label turn;
     @FXML
     protected Player player1;
     @FXML
@@ -262,13 +266,17 @@ public class GameController {
     @FXML
     //method to roll the dice
     protected void rollDiceBtn(ActionEvent event) throws InterruptedException {
-        rollDice();
+        if(moves == 0){
+            rollDice();
+        }
     }
 
     //method to roll dice by clicking image
     @FXML
     protected void clickDice(MouseEvent event){
-        rollDice();
+        if(moves == 0){
+            rollDice();
+        }
     }
 
     protected void rollDice(){
@@ -276,7 +284,6 @@ public class GameController {
         Random r = new Random();
 
         btnDice.setDisable(true);
-        int rolledNum;
 
         //File is loaded absolute needs to be relative
         Image dice1 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice1.png");
@@ -289,6 +296,12 @@ public class GameController {
         //getting a number from 1-6
         rolledNum = r.nextInt(7-1)+1;
         moves = rolledNum;
+        turns++;
+        if(turns%2==0){
+            turn.setText("Player 2");
+        }else{
+            turn.setText("Player 1");
+        }
 
 
         //setting the rolled image
@@ -370,23 +383,72 @@ public class GameController {
 
     //to spawn player into map
     protected void spawning(){
-        if(mainMap.getChildren().contains(player1.getSelf())){
-            player2.spawn(mainMap);
-        }else{
-            player1.spawn(mainMap);
+        if (moves > 0) {
+            if(turns %2 ==0){
+                player2.spawn(mainMap);
+            }else{
+                player1.spawn(mainMap);
+            }
+            moves--;
+            Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
         }
     }
 
     //method to take keyboard input
     @FXML
-    public void inp(){
+    public void inp(MouseEvent event){
         mainMap.requestFocus();
         mainMap.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                System.out.println(keyEvent.getCode());
+                movingPlayer(keyEvent.getCode());
             }
         });
+    }
+
+    //method to filter the input
+    public void movingPlayer(KeyCode direction){
+        Player currPlayer;
+        if(turns %2 ==0){
+            currPlayer = player2;
+        }else {
+            currPlayer = player1;
+        }
+
+        if(mainMap.getChildren().contains(currPlayer.getSelf())){
+            if(moves != 0){
+                switch (direction){
+                    case UP:
+                        currPlayer.move(0,-1);
+                        break;
+                    case DOWN:
+                        currPlayer.move(0,1);
+                        break;
+                    case LEFT:
+                        currPlayer.move(-1,0);
+                        break;
+                    case RIGHT:
+                        currPlayer.move(1,0);
+                        break;
+                    case W:
+                        currPlayer.move(0,-1);
+                        break;
+                    case S:
+                        currPlayer.move(0,1);
+                        break;
+                    case A:
+                        currPlayer.move(-1,0);
+                        break;
+                    case D:
+                        currPlayer.move(1,0);
+                        break;
+                    default:
+                        break;
+                }
+                moves--;
+                Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
+            }
+        }
     }
 
 

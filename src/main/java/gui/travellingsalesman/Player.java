@@ -23,21 +23,27 @@ public class Player{
     private int moves;
 
     //method to move player
-    protected void move(int X, int Y){
+    protected void move(int X, int Y) {
         int newX = getPlayerCoords().getX() + X;
         int newY = getPlayerCoords().getY() + Y;
 
-        if(newX <= 9|| newX >=0){
-            if(newY <=9||newY >= 0){
-                setPlayerCoords(new Coords(newX,newY));
-                if(getSelf() == null){
-                    System.out.println("The player circle is null for some reason");
-                }else {
-                    map.add(getSelf(),getPlayerCoords().getX(),getPlayerCoords().getY());
-                }
+        // Check if the new coordinates are within the bounds of the grid
+        if (newX >= 0 && newX <= 9 && newY >= 0 && newY <= 9) {
+            setPlayerCoords(new Coords(newX, newY));
+
+            // Remove the player circle from its previous position in the grid
+            map.getChildren().remove(getSelf());
+
+            // Check if the player circle is null
+            if (getSelf() == null) {
+                System.out.println("The player circle is null for some reason");
+            } else {
+                // Add the player circle to the new coordinates in the grid
+                map.add(getSelf(), getPlayerCoords().getX(), getPlayerCoords().getY());
             }
         }
     }
+
 
     //method to move player to spawn
     @FXML
