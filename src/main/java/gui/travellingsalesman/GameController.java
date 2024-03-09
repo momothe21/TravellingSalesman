@@ -414,6 +414,8 @@ public class GameController {
         }else {
             currPlayer = player1;
         }
+        Coords currcoords = currPlayer.getPlayerCoords();
+        Coords newcoords;
 
         if(mainMap.getChildren().contains(currPlayer.getSelf())){
             if(moves != 0){
@@ -445,7 +447,10 @@ public class GameController {
                     default:
                         break;
                 }
-                moves--;
+                newcoords = currPlayer.getPlayerCoords();
+                if(newcoords != currcoords){
+                    moves--;
+                }
                 Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
             }
         }
