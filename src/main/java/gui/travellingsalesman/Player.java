@@ -12,13 +12,22 @@ public class Player{
     private static int playercounter;
     private Coords playerCoords;
     private ArrayList<Coords> playerPath=new ArrayList<Coords>();
-    private int score;
-    private int wealth;
-    private double power;
+    private double score=0;
+    private double wealth=0;
+    private double power=0;
     private Weapons weapon;
     private GridPane map;
 
     private Circle self;
+
+    //method for when player encounters item
+    protected void encounteredItem(){}
+
+    //method for when player encounters Treasure
+    protected void encounteredTreasure(){
+
+    }
+
 
     //method to move player
     protected void move(int X, int Y) {
@@ -100,20 +109,20 @@ public class Player{
         this.playerPath = playerPath;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setScore(double score) {
+        this.score += score;
     }
 
-    public int getWealth() {
+    public double getWealth() {
         return wealth;
     }
 
-    public void setWealth(int wealth) {
-        this.wealth = wealth;
+    public void setWealth(double wealth) {
+        this.wealth += wealth;
     }
 
     public double getPower() {
@@ -138,5 +147,9 @@ public class Player{
 
     public void setSelf(Circle self) {
         this.self = self;
+    }
+
+    public int getPlayernum() {
+        return playernum;
     }
 }

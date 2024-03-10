@@ -2,6 +2,7 @@
 package gui.travellingsalesman;
 
 //imports
+import gui.travellingsalesman.Treasures.treasure;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,6 +37,8 @@ public class GameController {
     private Parent root;
     private Scene main;
 
+    private Treasures quest;
+
     private int moves, rolledNum;
 
     private int turns;
@@ -58,10 +61,12 @@ public class GameController {
     @FXML
     private GridPane mainMap, mainMap1;
     protected Rectangle[][] cells = new Rectangle[10][10];
+    protected Rectangle[][] cellsMini = new Rectangle[10][10];
 
     protected ArrayList<Coords> Blackcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Orangecells = new ArrayList<Coords>();
     protected ArrayList<Coords> Greencells = new ArrayList<Coords>();
+    protected ArrayList<Coords> Greencellspath = new ArrayList<Coords>();
     protected ArrayList<Coords> Bluecells = new ArrayList<Coords>();
     protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Redcells = new ArrayList<Coords>();
@@ -73,6 +78,28 @@ public class GameController {
     protected Player player1;
     @FXML
     protected Player player2;
+    @FXML
+    protected Label questLabel,powerLabel,wealthLabel,scoreLabel;
+
+    //colours
+    //Two light schemes for user preference(as part of phase 3 maybe)
+    //light mode
+//        Paint black=Color.BLACK;
+//        Paint blue=Color.rgb(30,144,255);
+//        Paint green=Color.rgb(63,255,33);
+//        Paint free=Color.rgb(242,221,166);
+//        Paint orange=Color.rgb(255,142,0);
+//        Paint yellow=Color.rgb(231,255,31);
+//        Paint red = Color.rgb(255,0,0);
+    //dark mode
+    Paint black=Color.BLACK;
+    Paint blue=Color.BLUE;
+    Paint green=Color.GREEN;
+    Paint free=Color.rgb(242,221,166);
+    Paint orange=Color.ORANGE;
+    Paint yellow=Color.GOLD;
+    Paint red = Color.RED;
+
 
     //method to create the valuable treasures
     protected void assignTreasures(int type){
@@ -156,25 +183,6 @@ public class GameController {
             }
             count++;
         }
-
-        //colours
-        //Two light schemes for user preference(as part of phase 3 maybe)
-        //light mode
-//        Paint black=Color.BLACK;
-//        Paint blue=Color.rgb(30,144,255);
-//        Paint green=Color.rgb(63,255,33);
-//        Paint free=Color.rgb(242,221,166);
-//        Paint orange=Color.rgb(255,142,0);
-//        Paint yellow=Color.rgb(231,255,31);
-//        Paint red = Color.rgb(255,0,0);
-        //dark mode
-        Paint black=Color.BLACK;
-        Paint blue=Color.BLUE;
-        Paint green=Color.GREEN;
-        Paint free=Color.rgb(242,221,166);
-        Paint orange=Color.ORANGE;
-        Paint yellow=Color.GOLD;
-        Paint red = Color.RED;
 
         //player spawns
         Playerspawn.add(new Coords(0,0));
@@ -281,6 +289,7 @@ public class GameController {
                                 if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
                                     cells[x][y].setFill(green);
                                     Greencells.add(new Coords(x,y));
+                                    Greencellspath.add(new Coords(x,y));
                                     valuables.get(i).setLocation(new Coords(x,y));
                                 }else{
                                     i--;
@@ -340,6 +349,9 @@ public class GameController {
         }
         //getting the event handler ready
         setEvents();
+
+        //assigning quest
+        setQuest();
     }
     //method to roll dice using btn
     @FXML
@@ -378,8 +390,12 @@ public class GameController {
         turns++;
         if(turns%2==0){
             turn.setText("Player 2");
+            displayStats(player2);
+            upadateMiniMap(player2);
         }else{
             turn.setText("Player 1");
+            displayStats(player1);
+            upadateMiniMap(player1);
         }
 
 
@@ -431,9 +447,31 @@ public class GameController {
                 Rectangle cell = new Rectangle();
                 cell.setHeight(10);
                 cell.setWidth(10);
-                cell.setFill(cells[i][j].getFill());
+                cell.setFill(free);
+                cellsMini[i][j] = cell;
                 mainMap1.add(cell,i,j);
             }
+        }
+    }
+
+    //method to update map with players current path
+    @FXML
+    protected void upadateMiniMap(Player player){
+        //variables
+        int x,y;
+        Paint curcolor;
+        //resetting the map from previous player
+        for(int i = 0;i<10;i++){
+            for(int j = 0; j<10; j++){
+                cellsMini[i][j].setFill(free);
+            }
+        }
+        //colouring in the players path
+        for(int i = 0; i < player.getPlayerPath().size();i++){
+            x= player.getPlayerPath().get(i).getX();
+            y= player.getPlayerPath().get(i).getY();
+            curcolor = cells[x][y].getFill();
+            cellsMini[x][y].setFill(curcolor);
         }
     }
 
@@ -511,6 +549,7 @@ public class GameController {
         }
         Coords currcoords = currPlayer.getPlayerCoords();
         Coords newcoords;
+        Coords special = new Coords(0,0);
 
         if(mainMap.getChildren().contains(currPlayer.getSelf())){
             if(moves != 0){
@@ -523,7 +562,6 @@ public class GameController {
                             currPlayer.move(0,1);
                             break;
                         case LEFT, A:
-
                             currPlayer.move(-1,0);
                             break;
                         case RIGHT, D:
@@ -532,29 +570,80 @@ public class GameController {
                         default:
                             break;
                     }
+                }else{
+                    special.setY(currcoords.getY());
+                    special.setX(currcoords.getX());
+                    switch (direction){
+                        case UP, W:
+                            special.setY(currcoords.getY()-1);
+                            break;
+                        case DOWN, S:
+                            special.setY(currcoords.getY()+1);
+                            break;
+                        case LEFT, A:
+                            special.setX(currcoords.getX()-1);
+                            break;
+                        case RIGHT, D:
+                            special.setX(currcoords.getX()+1);
+                            break;
+                        default:
+                            break;
+                    }
+                    currPlayer.getPlayerPath().add(special);
                 }
                 newcoords = currPlayer.getPlayerCoords();
                 if(newcoords != currcoords){
                     moves--;
                     currPlayer.getPlayerPath().add(newcoords);
+                    Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
 
                     //checking if the current location is special
                     if(EventController.isItem(newcoords)){
                         System.out.println("Encountered Item");
                     }else if(EventController.isCastle(newcoords)){
-                        System.out.println("Encountered Castle");
+                        if(currPlayer.getPlayerPath().contains(quest.getLocation())){
+                            currPlayer.setWealth(quest.getScore());
+                            currPlayer.setScore(1);
+                            if(!valuables.isEmpty()){
+                                setQuest();
+                            }else{
+                                Message.setText("Game Over\nPlayer "+currPlayer.getPlayernum()+" Wins");
+                            }
+                            player1.setPlayerPath(new ArrayList<Coords>());
+                            player2.setPlayerPath(new ArrayList<Coords>());
+                        }
                     } else if (EventController.isMarket(newcoords)) {
                         System.out.println("Encountered Market");
                     } else if (EventController.isTreasure(newcoords)) {
-                        System.out.println("Encountered Treasure");
+                        if(currPlayer.getPlayerPath().contains(quest.getLocation())){
+                            int x = quest.getLocation().getX();
+                            int y = quest.getLocation().getY();
+                            //informing player that they found the quest item
+                            Message.setText("You found the quest item "+quest.getName().toString()+".\n Go to the castle to turn it in!");
+                            //what happens after finding the correct Item
+                            cells[x][y].setFill(free);
+                            if(!valuables.isEmpty()){
+                                valuables.remove(quest);
+                                Greencells.remove(quest.getLocation());
+                            }
+                        }
                     } else if (EventController.isTrap(newcoords)) {
                         System.out.println("Encountered Trap");
                     }
 
                 }
-                Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
             }
+            displayStats(currPlayer);
+            upadateMiniMap(currPlayer);
         }
+    }
+
+    //displaying a players stats onto the side
+    @FXML
+    protected void displayStats(Player player){
+        scoreLabel.setText(""+player.getScore());
+        wealthLabel.setText(""+player.getWealth());
+        powerLabel.setText(""+player.getPower());
     }
 
 
@@ -621,5 +710,18 @@ public class GameController {
 
     public GridPane getMainMap() {
         return mainMap;
+    }
+
+    public Treasures getQuest() {
+        return quest;
+    }
+
+    public void setQuest() {
+        Treasures quest;
+        Random r = new Random();
+        int num = r.nextInt(valuables.size());
+        quest = valuables.get(num);
+        this.quest = quest;
+        questLabel.setText(quest.getName().toString());
     }
 }

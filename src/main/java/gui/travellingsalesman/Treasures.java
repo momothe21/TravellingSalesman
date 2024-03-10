@@ -8,6 +8,20 @@ public class Treasures {
     private int score;
     private Coords location;
 
+    //overiding the equals method in order to make sure the quest and treasure are the same
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Coords)) {
+            return false;
+        }
+        Treasures other = (Treasures) obj;
+        return this.name == other.name;
+    }
+
+
     //constructor
     public Treasures(int num){
         setScore(num);
