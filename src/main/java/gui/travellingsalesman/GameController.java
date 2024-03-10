@@ -66,6 +66,7 @@ public class GameController {
     protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Redcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Playerspawn = new ArrayList<Coords>();
+    protected ArrayList<Treasures> valuables = new ArrayList<Treasures>();
     @FXML
     protected Label turn;
     @FXML
@@ -73,13 +74,88 @@ public class GameController {
     @FXML
     protected Player player2;
 
-    //method to create the tiles for the frid map
+    //method to create the valuable treasures
+    protected void assignTreasures(int type){
+        int num = 0;
+        switch (type){
+            case 1:
+                num = 2000;
+                break;
+            case 2:
+                num = 5000;
+                break;
+            case 3:
+                num = 4000;
+                break;
+            case 4:
+                num = 6000;
+                break;
+            case 5:
+                num = 7000;
+                break;
+            case 6:
+                num = 1000;
+                break;
+            case 7:
+                num = 8000;
+                break;
+            case 8:
+                num = 3000;
+                break;
+            default:
+                System.out.println("Random number fo score out of range.");
+                break;
+        }
+        valuables.add(new Treasures(num));
+    }
 
+    //method to create the tiles for the frid map
     @FXML
     protected void createMap(){
         //variables for random map creation
         Random r = new Random();
         int color = 0,y,x,bc=0;
+        int count = 1;
+
+        //getting the treasures ready
+        //assign scores randomly
+        for (int i = 1; i <9;i++){
+            assignTreasures(i);
+        }
+        //assign treasure randomly
+        for(Treasures treasure: valuables){
+            treasure.setName(Treasures.treasure.WoodenBow);
+            switch (count){
+                case 1:
+                    treasure.setName(Treasures.treasure.DiamondRing);
+                    break;
+                case 2:
+                    treasure.setName(Treasures.treasure.CrystalGoblets);
+                    break;
+                case 3:
+                    treasure.setName(Treasures.treasure.DragonsScroll);
+                    break;
+                case 4:
+                    treasure.setName(Treasures.treasure.GoldenGoblet);
+                    break;
+                case 5:
+                    treasure.setName(Treasures.treasure.JewelEncrustedSword);
+                    break;
+                case 6:
+                    treasure.setName(Treasures.treasure.PaladinsShield);
+                    break;
+                case 7:
+                    treasure.setName(Treasures.treasure.GoldenKey);
+                    break;
+                case 8:
+                    treasure.setName(Treasures.treasure.WoodenBow);
+                    break;
+                default:
+                    System.out.println("type of weapon out of range");
+                    break;
+            }
+            count++;
+        }
 
         //colours
         //Two light schemes for user preference(as part of phase 3 maybe)
@@ -205,6 +281,7 @@ public class GameController {
                                 if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
                                     cells[x][y].setFill(green);
                                     Greencells.add(new Coords(x,y));
+                                    valuables.get(i).setLocation(new Coords(x,y));
                                 }else{
                                     i--;
                                 }
@@ -261,6 +338,8 @@ public class GameController {
                 i--;
             }
         }
+        //getting the event handler ready
+        setEvents();
     }
     //method to roll dice using btn
     @FXML
@@ -333,6 +412,17 @@ public class GameController {
         btnDice.setDisable(false);
     }
 
+    //event handler initialize
+    protected void setEvents(){
+        //event handler setting
+        EventController.setTraps(Redcells);
+        EventController.setWalls(Blackcells);
+        EventController.setCastle(Yellowcells);
+        EventController.setItems(Bluecells);
+        EventController.setMarkets(Orangecells);
+        EventController.setTreasure(Greencells);
+    }
+
     //creating minimaps
     @FXML
     protected void createMiniMap(){
@@ -383,14 +473,18 @@ public class GameController {
 
     //to spawn player into map
     protected void spawning(){
+        Player currPlayer;
         if (moves > 0) {
             if(turns %2 ==0){
-                player2.spawn(mainMap);
+                currPlayer=player2;
             }else{
-                player1.spawn(mainMap);
+                currPlayer=player1;
             }
-            moves--;
-            Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
+            if(!mainMap.getChildren().contains(currPlayer.getSelf())){
+                currPlayer.spawn(mainMap);
+                moves--;
+                Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
+            }
         }
     }
 
@@ -408,6 +502,7 @@ public class GameController {
 
     //method to filter the input
     public void movingPlayer(KeyCode direction){
+        //variables and classes
         Player currPlayer;
         if(turns %2 ==0){
             currPlayer = player2;
@@ -419,37 +514,43 @@ public class GameController {
 
         if(mainMap.getChildren().contains(currPlayer.getSelf())){
             if(moves != 0){
-                switch (direction){
-                    case UP:
-                        currPlayer.move(0,-1);
-                        break;
-                    case DOWN:
-                        currPlayer.move(0,1);
-                        break;
-                    case LEFT:
-                        currPlayer.move(-1,0);
-                        break;
-                    case RIGHT:
-                        currPlayer.move(1,0);
-                        break;
-                    case W:
-                        currPlayer.move(0,-1);
-                        break;
-                    case S:
-                        currPlayer.move(0,1);
-                        break;
-                    case A:
-                        currPlayer.move(-1,0);
-                        break;
-                    case D:
-                        currPlayer.move(1,0);
-                        break;
-                    default:
-                        break;
+                if(EventController.canMove(currcoords,direction)){
+                    switch (direction){
+                        case UP, W:
+                            currPlayer.move(0,-1);
+                            break;
+                        case DOWN, S:
+                            currPlayer.move(0,1);
+                            break;
+                        case LEFT, A:
+
+                            currPlayer.move(-1,0);
+                            break;
+                        case RIGHT, D:
+                            currPlayer.move(1,0);
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 newcoords = currPlayer.getPlayerCoords();
                 if(newcoords != currcoords){
                     moves--;
+                    currPlayer.getPlayerPath().add(newcoords);
+
+                    //checking if the current location is special
+                    if(EventController.isItem(newcoords)){
+                        System.out.println("Encountered Item");
+                    }else if(EventController.isCastle(newcoords)){
+                        System.out.println("Encountered Castle");
+                    } else if (EventController.isMarket(newcoords)) {
+                        System.out.println("Encountered Market");
+                    } else if (EventController.isTreasure(newcoords)) {
+                        System.out.println("Encountered Treasure");
+                    } else if (EventController.isTrap(newcoords)) {
+                        System.out.println("Encountered Trap");
+                    }
+
                 }
                 Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
             }
@@ -490,64 +591,32 @@ public class GameController {
         return cells;
     }
 
-    public void setCells(Rectangle[][] cells) {
-        this.cells = cells;
-    }
-
     public ArrayList<Coords> getBlackcells() {
         return Blackcells;
-    }
-
-    public void setBlackcells(ArrayList<Coords> blackcells) {
-        Blackcells = blackcells;
     }
 
     public ArrayList<Coords> getOrangecells() {
         return Orangecells;
     }
 
-    public void setOrangecells(ArrayList<Coords> orangecells) {
-        Orangecells = orangecells;
-    }
-
     public ArrayList<Coords> getGreencells() {
         return Greencells;
-    }
-
-    public void setGreencells(ArrayList<Coords> greencells) {
-        Greencells = greencells;
     }
 
     public ArrayList<Coords> getBluecells() {
         return Bluecells;
     }
 
-    public void setBluecells(ArrayList<Coords> bluecells) {
-        Bluecells = bluecells;
-    }
-
     public ArrayList<Coords> getYellowcells() {
         return Yellowcells;
-    }
-
-    public void setYellowcells(ArrayList<Coords> yellowcells) {
-        Yellowcells = yellowcells;
     }
 
     public ArrayList<Coords> getRedcells() {
         return Redcells;
     }
 
-    public void setRedcells(ArrayList<Coords> redcells) {
-        Redcells = redcells;
-    }
-
     public ArrayList<Coords> getPlayerspawn() {
         return Playerspawn;
-    }
-
-    public void setPlayerspawn(ArrayList<Coords> playerspawn) {
-        Playerspawn = playerspawn;
     }
 
     public GridPane getMainMap() {

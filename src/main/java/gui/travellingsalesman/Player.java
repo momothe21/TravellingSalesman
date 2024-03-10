@@ -11,7 +11,7 @@ public class Player{
     private final int playernum;
     private static int playercounter;
     private Coords playerCoords;
-    private ArrayList<Coords> playerPath;
+    private ArrayList<Coords> playerPath=new ArrayList<Coords>();
     private int score;
     private int wealth;
     private double power;
@@ -19,8 +19,6 @@ public class Player{
     private GridPane map;
 
     private Circle self;
-
-    private int moves;
 
     //method to move player
     protected void move(int X, int Y) {
@@ -54,8 +52,10 @@ public class Player{
         if(getPlayerCoords().getX()<0){
             if(playernum%2!=0){
                 setPlayerCoords(new Coords(0,0));
+                playerPath.add(new Coords(0,0));
             }else {
                 setPlayerCoords(new Coords(9,9));
+                playerPath.add(new Coords(9,9));
             }
             if(getSelf() == null){
                 System.out.println("The player circle is null for some reason");

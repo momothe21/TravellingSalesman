@@ -31,6 +31,19 @@ public class Coords {
         this.y = y;
     }
 
+    //Overiding the equals method in order to check if two coordinates are the same through their x and y values
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Coords)) {
+            return false;
+        }
+        Coords other = (Coords) obj;
+        return this.x == other.x && this.y == other.y;
+    }
+
     //method to calculate distance between tiles(used to use Euclidean distance, updated to absolutes and ors)
     protected int distanceCalc(ArrayList<Coords> other){
         int distance=10,cur,x1,x2,dx,y1,y2,dy;
