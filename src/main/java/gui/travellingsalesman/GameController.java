@@ -62,6 +62,8 @@ public class GameController {
     private GridPane mainMap, mainMap1;
     protected Rectangle[][] cells = new Rectangle[10][10];
     protected Rectangle[][] cellsMini = new Rectangle[10][10];
+    @FXML
+    protected Rectangle winnerPlayer;
 
     protected ArrayList<Coords> Blackcells = new ArrayList<Coords>();
     protected ArrayList<Coords> Orangecells = new ArrayList<Coords>();
@@ -79,7 +81,8 @@ public class GameController {
     @FXML
     protected Player player2;
     @FXML
-    protected Label questLabel,powerLabel,wealthLabel,scoreLabel;
+    protected Label questLabel,powerLabel,wealthLabel,scoreLabel,winMessage;
+    public static Player winner;
 
     //colours
     //Two light schemes for user preference(as part of phase 3 maybe)
@@ -353,6 +356,17 @@ public class GameController {
         //assigning quest
         setQuest();
     }
+
+    //method to roll dice using key
+    @FXML
+    protected void rollDiceKey(KeyEvent event) throws InterruptedException {
+        if(event.getCode() == KeyCode.SPACE){
+            if(moves == 0){
+                rollDice();
+            }
+        }
+    }
+
     //method to roll dice using btn
     @FXML
     //method to roll the dice
@@ -487,20 +501,39 @@ public class GameController {
         playerTwo.setFill(temp2);
 
         //creating the players as well
-        player1 = new Player(playerOne,new Coords(-1,-1));
-        player2 = new Player(playerTwo,new Coords(-2,-2));
+        player1 = new Player(playerOne,new Coords(-1,-1),1);
+        player2 = new Player(playerTwo,new Coords(-2,-2),2);
     }
-
 
     //method to go back to menu
     @FXML
     protected void switchSceneToMenu(ActionEvent event) throws IOException {
-        //loading fxml file as root
-        root = FXMLLoader.load(getClass().getResource("menu-view.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        main = new Scene(root);
-        stage.setScene(main);
-        stage.show();
+        if (winner == null) {
+            //loading fxml file as root
+            root = FXMLLoader.load(getClass().getResource("menu-view.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            main = new Scene(root);
+            stage.setScene(main);
+            stage.show();
+        }else{
+            endController controller = new endController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("win-view.fxml"));
+            //setting controller
+            loader.setController(controller);
+            root = loader.load();
+
+
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            main = new Scene(root);
+            stage.setScene(main);
+            stage.show();
+
+            controller.setMain(main);
+            controller.setRoot(root);
+            controller.setStage(stage);
+            controller.getWinnerPlayer().setFill(winner.getSelf().getFill());
+
+        }
     }
 
     //method to spawn players using a click
@@ -607,7 +640,30 @@ public class GameController {
                             if(!valuables.isEmpty()){
                                 setQuest();
                             }else{
-                                Message.setText("Game Over\nPlayer "+currPlayer.getPlayernum()+" Wins");
+                                if(player1.getScore()> player2.getScore()){
+                                    winner = player1;
+                                } else if (player2.getScore()> player1.getScore()) {
+                                    winner = player2;
+                                }else{
+                                    if(player1.getWealth()> player2.getWealth()){
+                                        winner = player1;
+                                    } else if (player2.getWealth()> player1.getWealth()) {
+                                        winner = player2;
+                                    }else{
+                                        if(player1.getPower()> player2.getPower()){
+                                            winner = player1;
+                                        } else if (player2.getPower()> player1.getPower()) {
+                                            winner = player2;
+                                        }
+                                    }
+                                }
+                                if(!(winner == null)){
+                                    Message.setText("Game Over,\nPlayer "+winner.getPlayernum()+" Wins!");
+                                    Message.autosize();
+                                    ReturntoMenu.setText("Claim your Prize");
+                                }else{
+                                    Message.setText("This game ended in a surprising perfect draw!");
+                                }
                             }
                             player1.setPlayerPath(new ArrayList<Coords>());
                             player2.setPlayerPath(new ArrayList<Coords>());

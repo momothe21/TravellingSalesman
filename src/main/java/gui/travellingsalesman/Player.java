@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Player{
     //attributes
     private final int playernum;
-    private static int playercounter;
     private Coords playerCoords;
     private ArrayList<Coords> playerPath=new ArrayList<Coords>();
     private double score=0;
@@ -83,11 +82,10 @@ public class Player{
 
     //construct
 
-    public Player(Circle player, Coords coords) {
+    public Player(Circle player, Coords coords, int num) {
         setSelf(player);
         setPlayerCoords(coords);
-        playercounter++;
-        playernum = playercounter;
+        playernum = num;
     }
 
 
