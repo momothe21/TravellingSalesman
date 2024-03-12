@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="statsWindow" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: beige;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.travellingsalesman.StatsController">
+   <children>
+      <Label layoutX="193.0" layoutY="14.0" text="StatsBoard">
+         <font>
+            <Font name="Arial Bold" size="40.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f2dda6" height="312.0" layoutX="30.0" layoutY="61.0" stroke="BLACK" strokeType="INSIDE" width="541.0" />
+      <Label layoutX="139.0" layoutY="72.0" text="Power">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="246.0" layoutY="72.0" text="Wealth">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="368.0" layoutY="72.0" text="Score">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="101.0" text="Player 1:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="182.0" text="Player 2:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="463.0" layoutY="72.0" text="Weapon">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="p1PowerLabel" layoutX="143.0" layoutY="103.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="p1WealthLabel" layoutX="253.0" layoutY="103.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="p1ScoreLabel" layoutX="369.0" layoutY="103.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="timerLabel" layoutX="35.0" layoutY="289.0" text="Round Time: 00:00:00">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="251.0" text="Player's Turn:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="365.0" layoutY="227.0" text="Quest Item:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="turnLabel" layoutX="156.0" layoutY="251.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="returnButton" layoutX="248.0" layoutY="333.0" mnemonicParsing="false" onAction="#switchWindows" text="Return To Game" />
+      <ImageView fx:id="p1WeaponImage" fitHeight="70.0" fitWidth="70.0" layoutX="465.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="p2WeaponImage" fitHeight="70.0" fitWidth="70.0" layoutX="465.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="p2PowerLabel" layoutX="143.0" layoutY="184.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="p2WealthLabel" layoutX="253.0" layoutY="184.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="p2ScoreLabel" layoutX="369.0" layoutY="184.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="questImage" fitHeight="85.0" fitWidth="117.0" layoutX="429.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="questLabel" layoutX="369.0" layoutY="251.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

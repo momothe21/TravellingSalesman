@@ -2,7 +2,6 @@
 package gui.travellingsalesman;
 
 //imports
-import gui.travellingsalesman.Treasures.treasure;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -28,12 +28,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 //game controller
 public class GameController {
     // Attributes and references
-    private Stage stage;
+    private static Stage stage;
     private Parent root;
     private Scene main;
 
@@ -42,6 +43,10 @@ public class GameController {
     private int moves, rolledNum;
 
     private int turns;
+    private long startTimeMillis;
+
+    @FXML
+    private AnchorPane gameWindow;
 
     @FXML
     private Button ReturntoMenu;
@@ -142,6 +147,10 @@ public class GameController {
     //method to create the tiles for the frid map
     @FXML
     protected void createMap(){
+        //setting values
+        stage = (Stage) gameWindow.getScene().getWindow();
+
+
         //variables for random map creation
         Random r = new Random();
         int color = 0,y,x,bc=0;
@@ -388,6 +397,10 @@ public class GameController {
         //variables
         Random r = new Random();
 
+        //saving start time
+        startTimeMillis =System.currentTimeMillis();;
+
+        //dummy proofing
         btnDice.setDisable(true);
 
         //File is loaded absolute needs to be relative
@@ -665,8 +678,7 @@ public class GameController {
                                     Message.setText("This game ended in a surprising perfect draw!");
                                 }
                             }
-                            player1.setPlayerPath(new ArrayList<Coords>());
-                            player2.setPlayerPath(new ArrayList<Coords>());
+                            currPlayer.setPlayerPath(new ArrayList<Coords>());
                         }
                     } else if (EventController.isMarket(newcoords)) {
                         System.out.println("Encountered Market");
@@ -700,6 +712,51 @@ public class GameController {
         scoreLabel.setText(""+player.getScore());
         wealthLabel.setText(""+player.getWealth());
         powerLabel.setText(""+player.getPower());
+    }
+
+    //method to open a new window
+    @FXML
+    protected void statsBoard(MouseEvent event) throws IOException{
+        if(rolledNum != 0){
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("stats-view.fxml"));
+            Stage stage1 = new Stage();
+            Parent root1 = loader1.load();
+
+            Image icon = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/icon.png");
+            stage1.getIcons().add(icon);
+
+            Scene stats = new Scene(root1);
+
+            stage1.setScene(stats);
+            stage1.show();
+            stage.getScene().getWindow();
+            stage.getScene().getWindow().hide();
+            StatsController statsController = getStatsController(loader1);
+            statsController.setStage(stage1);
+            statsController.timer();
+            statsController.display();
+        }
+    }
+
+    private StatsController getStatsController(FXMLLoader loader1) {
+        StatsController statsController = loader1.getController();
+
+        //sending players' info
+        statsController.setTurn(turns);
+        statsController.setQuest(quest);
+        statsController.setP1Power(player1.getPower());
+        statsController.setP1Score(player1.getScore());
+        statsController.setP1Wealth(player1.getWealth());
+        statsController.setP2Power(player2.getPower());
+        statsController.setP2Score(player2.getScore());
+        statsController.setP2Wealth(player2.getWealth());
+        statsController.setStartTimeMillis(startTimeMillis);
+        return statsController;
+    }
+
+    //method to enable the window again
+    protected static void showGame(){
+        stage.show();
     }
 
 

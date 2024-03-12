@@ -2,6 +2,7 @@
 package gui.travellingsalesman;
 
 //imports
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,9 @@ public class MenuController {
 
         // Exit the program
         stage.close();
+
+        //to get other windows
+        Platform.exit();
     }
 
     // Method to switch the window to the help window
