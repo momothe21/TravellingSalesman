@@ -60,17 +60,17 @@
     </Label>
     <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="380.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../Images/hammer.png" />
+            <Image url="@../../images/weapons/hammer.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="450.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../Images/Bow.png" />
+            <Image url="@../../images/weapons/Bow.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="61.0" fitWidth="78.0" layoutX="515.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../Images/sword.png" />
+            <Image url="@../../images/weapons/sword.png" />
         </image>
     </ImageView>
    <Circle fx:id="player1" fill="#f2dda6" layoutX="384.0" layoutY="370.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
@@ -87,12 +87,12 @@
    </Label>
    <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="368.0" layoutY="352.0" pickOnBounds="true" preserveRatio="true">
       <image>
-         <Image url="@../../Images/icon.png" />
+         <Image url="@../../images/players/icon.png" />
       </image>
    </ImageView>
    <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="493.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
       <image>
-         <Image url="@../../Images/Player2.png" />
+         <Image url="@../../images/players/Player2.png" />
       </image>
    </ImageView>
 </AnchorPane>
