@@ -10,7 +10,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" onKeyPressed="#returnSpace" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../throne.png" />
+            <Image url="@../../Images/throne.png" />
          </image>
       </ImageView>
       <Rectangle fx:id="winnerPlayer" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="75.0" layoutX="263.0" layoutY="238.0" onKeyPressed="#returnSpace" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0" />

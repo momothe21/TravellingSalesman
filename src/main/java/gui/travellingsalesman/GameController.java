@@ -28,7 +28,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 //game controller
