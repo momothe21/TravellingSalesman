@@ -60,17 +60,17 @@
     </Label>
     <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="380.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@hammer.png" />
+            <Image url="@../../hammer.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="450.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@Bow.png" />
+            <Image url="@../../Bow.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="61.0" fitWidth="78.0" layoutX="515.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@sword.png" />
+            <Image url="@../../sword.png" />
         </image>
     </ImageView>
    <Circle fx:id="player1" fill="#f2dda6" layoutX="384.0" layoutY="370.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />

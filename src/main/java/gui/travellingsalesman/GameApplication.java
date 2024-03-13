@@ -27,7 +27,7 @@ public class GameApplication extends Application {
         Scene scene = new Scene(root);
 
         //creating application icon
-        Image icon = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/icon.png");
+        Image icon = new Image("icon.png");
         stage.getIcons().add(icon);
 
         //creating stage

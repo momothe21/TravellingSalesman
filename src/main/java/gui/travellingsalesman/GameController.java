@@ -404,12 +404,12 @@ public class GameController {
         btnDice.setDisable(true);
 
         //File is loaded absolute needs to be relative
-        Image dice1 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice1.png");
-        Image dice2 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice2.png");
-        Image dice3 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice3.png");
-        Image dice4 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice4.png");
-        Image dice5 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice5.png");
-        Image dice6 = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/gui/travellingsalesman/dice6.png");
+        Image dice1 = new Image("dice1.png");
+        Image dice2 = new Image("dice2.png");
+        Image dice3 = new Image("dice3.png");
+        Image dice4 = new Image("dice4.png");
+        Image dice5 = new Image("dice5.png");
+        Image dice6 = new Image("dice6.png");
 
         //getting a number from 1-6
         rolledNum = r.nextInt(7-1)+1;
@@ -506,8 +506,8 @@ public class GameController {
     @FXML
     protected void setCircleParent(){
         //making player icons
-        ImagePattern temp1 = new ImagePattern(new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/icon.png"));
-        ImagePattern temp2 = new ImagePattern(new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/Player2.png"));
+        ImagePattern temp1 = new ImagePattern(new Image("icon.png"));
+        ImagePattern temp2 = new ImagePattern(new Image("Player2.png"));
 
         //putting background for them
         playerOne.setFill(temp1);
@@ -722,7 +722,7 @@ public class GameController {
             Stage stage1 = new Stage();
             Parent root1 = loader1.load();
 
-            Image icon = new Image("file:/C:/Users/moham_my0tjcn/IdeaProjects/TravellingSalesman/src/main/resources/icon.png");
+            Image icon = new Image("icon.png");
             stage1.getIcons().add(icon);
 
             Scene stats = new Scene(root1);
