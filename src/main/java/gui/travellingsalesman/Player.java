@@ -1,6 +1,7 @@
 package gui.travellingsalesman;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 
@@ -128,7 +129,7 @@ public class Player{
     }
 
     public void setPower(double power) {
-        this.power = power;
+        this.power += power;
     }
 
     public Weapons getWeapon() {

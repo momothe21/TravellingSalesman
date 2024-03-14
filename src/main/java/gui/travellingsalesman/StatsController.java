@@ -15,14 +15,15 @@ import javafx.util.Duration;
 public class StatsController {
     //attributes etc
     Stage stage;
-    double p1Score,p2Score,p1Wealth, p2Wealth,p1Power,p2Power;
+    private double p1Score,p2Score,p1Wealth, p2Wealth,p1Power,p2Power;
+    private int questCounter;
     private int turn;
     Treasures quest;
     private long startTimeMillis;
     @FXML
     private AnchorPane statsWindow;
     @FXML
-    private Label p1ScoreLabel,p2ScoreLabel,p1WealthLabel,timerLabel, p2WealthLabel,p1PowerLabel,p2PowerLabel,questLabel, turnLabel;
+    private Label questCounterLabel, p1ScoreLabel,p2ScoreLabel,p1WealthLabel,timerLabel, p2WealthLabel,p1PowerLabel,p2PowerLabel,questLabel, turnLabel;
     @FXML
     private ImageView p1WeaponImage,p2WeaponImage,questImage;
 
@@ -64,6 +65,7 @@ public class StatsController {
         p1ScoreLabel.setText(""+getP1Score());
         p2ScoreLabel.setText(""+getP2Score());
         questLabel.setText(getQuest().getName().toString());
+        questCounterLabel.setText("Items found: "+questCounter);
         if(turn%2==0){
             turnLabel.setText("Player 2");
         }else {
@@ -157,5 +159,13 @@ public class StatsController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public int getQuestCounter() {
+        return questCounter;
+    }
+
+    public void setQuestCounter(int questCounter) {
+        this.questCounter = questCounter;
     }
 }

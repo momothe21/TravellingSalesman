@@ -103,5 +103,10 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <Label fx:id="questCounterLabel" layoutX="33.0" layoutY="332.0" text="Items found: 0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -69,14 +69,14 @@ public class GameController {
     @FXML
     protected Rectangle winnerPlayer;
 
-    protected ArrayList<Coords> Blackcells = new ArrayList<Coords>();
-    protected ArrayList<Coords> Orangecells = new ArrayList<Coords>();
-    protected ArrayList<Coords> Greencells = new ArrayList<Coords>();
-    protected ArrayList<Coords> Greencellspath = new ArrayList<Coords>();
-    protected ArrayList<Coords> Bluecells = new ArrayList<Coords>();
-    protected ArrayList<Coords> Yellowcells = new ArrayList<Coords>();
-    protected ArrayList<Coords> Redcells = new ArrayList<Coords>();
-    protected ArrayList<Coords> Playerspawn = new ArrayList<Coords>();
+    protected ArrayList<Coords> blackCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> orangeCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> greenCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> greenCellsPath = new ArrayList<Coords>();
+    protected ArrayList<Coords> blueCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> yellowCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> redCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> playerSpawn = new ArrayList<Coords>();
     protected ArrayList<Treasures> valuables = new ArrayList<Treasures>();
     @FXML
     protected Label turn;
@@ -113,28 +113,28 @@ public class GameController {
         int num = 0;
         switch (type){
             case 1:
-                num = 2000;
+                num = 200;
                 break;
             case 2:
-                num = 5000;
+                num = 500;
                 break;
             case 3:
-                num = 4000;
+                num = 400;
                 break;
             case 4:
-                num = 6000;
+                num = 600;
                 break;
             case 5:
-                num = 7000;
+                num = 700;
                 break;
             case 6:
-                num = 1000;
+                num = 100;
                 break;
             case 7:
-                num = 8000;
+                num = 800;
                 break;
             case 8:
-                num = 3000;
+                num = 300;
                 break;
             default:
                 System.out.println("Random number fo score out of range.");
@@ -196,8 +196,8 @@ public class GameController {
         }
 
         //player spawns
-        Playerspawn.add(new Coords(0,0));
-        Playerspawn.add(new Coords(9,9));
+        playerSpawn.add(new Coords(0,0));
+        playerSpawn.add(new Coords(9,9));
 
         // Create game grid
         for (int i = 0; i < 10; i++) {
@@ -209,18 +209,18 @@ public class GameController {
                 color= r.nextInt(100);
 
                 //making sure to leave spawn points alone
-                if((new Coords(i,j)).distanceCalc(Playerspawn)>1){
+                if((new Coords(i,j)).distanceCalc(playerSpawn)>1){
                     //random creation
                     //for black
                     if((color >=1 && color <=10)){
                         //checking distance between blacks
-                        if(bc>0&&((new Coords(i,j)).distanceCalc(Blackcells)>1)){
+                        if(bc>0&&((new Coords(i,j)).distanceCalc(blackCells)>1)){
                             cell.setFill(black);
-                            Blackcells.add(new Coords(i,j));
+                            blackCells.add(new Coords(i,j));
                             bc++;
                         }else if(bc == 0){
                             cell.setFill(black);
-                            Blackcells.add(new Coords(i,j));
+                            blackCells.add(new Coords(i,j));
                             bc++;
                         }else{
                             //setting it to default free space
@@ -229,7 +229,7 @@ public class GameController {
                         //setting traps
                     }else if (color>=32 && color<=42) {
                         cell.setFill(red);
-                        Redcells.add(new Coords(i,j));
+                        redCells.add(new Coords(i,j));
                     }else {
                         //default
                         cell.setFill(free);
@@ -237,7 +237,7 @@ public class GameController {
                     //setting the castle location
                     if(i==5 && j == 5){
                         cell.setFill(yellow);
-                        Yellowcells.add(new Coords(i,j));
+                        yellowCells.add(new Coords(i,j));
                     }
                 }else{
                     cell.setFill(free);
@@ -261,11 +261,11 @@ public class GameController {
                 if(color1 != black){
                     //making sure it is not overlapping the castle
                     if(color1 != yellow){
-                        if((new Coords(x,y)).distanceCalc(Yellowcells)>1){
-                            if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
+                        if((new Coords(x,y)).distanceCalc(yellowCells)>1){
+                            if((new Coords(x,y)).distanceCalc(playerSpawn)>0){
                                 //assigning blues
                                 cells[x][y].setFill(blue);
-                                Bluecells.add(new Coords(x,y));
+                                blueCells.add(new Coords(x,y));
                             }else{
                                 i--;
                             }
@@ -289,18 +289,18 @@ public class GameController {
             x = r.nextInt(10-1)+1;
             Paint color1 = cells[x][y].getFill();
             //checking distance between greens
-            if((new Coords(x,y)).distanceCalc(Greencells)>1){
+            if((new Coords(x,y)).distanceCalc(greenCells)>1){
                 //checking if it is overlapping with black
                 if(color1 != black){
                     //checking if it is overlapping with the castle
                     if(color1 != yellow){
                         //checking if it overlaps orange
                         if(color1!=blue){
-                            if((new Coords(x,y)).distanceCalc(Yellowcells)>2){
-                                if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
+                            if((new Coords(x,y)).distanceCalc(yellowCells)>1){
+                                if((new Coords(x,y)).distanceCalc(playerSpawn)>2){
                                     cells[x][y].setFill(green);
-                                    Greencells.add(new Coords(x,y));
-                                    Greencellspath.add(new Coords(x,y));
+                                    greenCells.add(new Coords(x,y));
+                                    greenCellsPath.add(new Coords(x,y));
                                     valuables.get(i).setLocation(new Coords(x,y));
                                 }else{
                                     i--;
@@ -327,7 +327,7 @@ public class GameController {
             x = r.nextInt(10 - 1) + 1;
             Paint color1 = cells[x][y].getFill();
             //checking the distance of oranges
-            if((new Coords(x,y)).distanceCalc(Orangecells)>1){
+            if((new Coords(x,y)).distanceCalc(orangeCells)>1){
                 //checking if it is overlapping the blacks
                 if(color1 != black){
                     //checking if it is overlapping with the castle
@@ -336,9 +336,9 @@ public class GameController {
                         if (color1 != green) {
                             //checking if it overlaps the blues
                             if (color1 != blue) {
-                                if((new Coords(x,y)).distanceCalc(Playerspawn)>0){
+                                if((new Coords(x,y)).distanceCalc(playerSpawn)>0){
                                     cells[x][y].setFill(orange);
-                                    Orangecells.add(new Coords(x,y));
+                                    orangeCells.add(new Coords(x,y));
                                 }else{
                                     i--;
                                 }
@@ -397,7 +397,9 @@ public class GameController {
         Random r = new Random();
 
         //saving start time
-        startTimeMillis =System.currentTimeMillis();;
+        if(startTimeMillis == 0){
+            startTimeMillis =System.currentTimeMillis();;
+        }
 
         //dummy proofing
         btnDice.setDisable(true);
@@ -457,12 +459,12 @@ public class GameController {
     //event handler initialize
     protected void setEvents(){
         //event handler setting
-        EventController.setTraps(Redcells);
-        EventController.setWalls(Blackcells);
-        EventController.setCastle(Yellowcells);
-        EventController.setItems(Bluecells);
-        EventController.setMarkets(Orangecells);
-        EventController.setTreasure(Greencells);
+        EventController.setTraps(redCells);
+        EventController.setWalls(blackCells);
+        EventController.setCastle(yellowCells);
+        EventController.setItems(blueCells);
+        EventController.setMarkets(orangeCells);
+        EventController.setTreasure(greenCells);
     }
 
     //creating minimaps
@@ -586,6 +588,8 @@ public class GameController {
     //method to filter the input
     public void movingPlayer(KeyCode direction){
         //variables and classes
+        Random lootValue = new Random();
+        int loot = 0;
         Player currPlayer;
         if(turns %2 ==0){
             currPlayer = player2;
@@ -644,13 +648,19 @@ public class GameController {
 
                     //checking if the current location is special
                     if(EventController.isItem(newcoords)){
-                        System.out.println("Encountered Item");
+                        loot = lootValue.nextInt(100)+1;
+                        currPlayer.setWealth(loot);
+                        Message.setText("You encountered treasure worth $"+ loot);
+                        blueCells.remove(currPlayer.getPlayerCoords());
+                        cells[currPlayer.getPlayerCoords().getX()][currPlayer.getPlayerCoords().getY()].setFill(free);
                     }else if(EventController.isCastle(newcoords)){
                         if(currPlayer.getPlayerPath().contains(quest.getLocation())){
                             currPlayer.setWealth(quest.getScore());
                             currPlayer.setScore(1);
                             if(!valuables.isEmpty()){
                                 setQuest();
+                                player1.getPlayerPath().remove(quest.getLocation());
+                                player2.getPlayerPath().remove(quest.getLocation());
                             }else{
                                 if(player1.getScore()> player2.getScore()){
                                     winner = player1;
@@ -680,22 +690,61 @@ public class GameController {
                             currPlayer.setPlayerPath(new ArrayList<Coords>());
                         }
                     } else if (EventController.isMarket(newcoords)) {
+                        //last one to be implemented
                         System.out.println("Encountered Market");
                     } else if (EventController.isTreasure(newcoords)) {
-                        if(currPlayer.getPlayerPath().contains(quest.getLocation())){
-                            int x = quest.getLocation().getX();
-                            int y = quest.getLocation().getY();
-                            //informing player that they found the quest item
-                            Message.setText("You found the quest item "+quest.getName().toString()+".\n Go to the castle to turn it in!");
-                            //what happens after finding the correct Item
-                            cells[x][y].setFill(free);
-                            if(!valuables.isEmpty()){
-                                valuables.remove(quest);
-                                Greencells.remove(quest.getLocation());
+                        //checking if anyone already encountered the quest treasure before the current treasure tile
+                        if(!(questInPath(player1)||questInPath(player2))){
+                            //checking if the new tile is the quest treasure
+                            if(currPlayer.getPlayerPath().contains(quest.getLocation())){
+                                int x = quest.getLocation().getX();
+                                int y = quest.getLocation().getY();
+                                //informing player that they found the quest item
+                                Message.setText("You found the quest item "+quest.getName().toString()+".\n Go to the castle to turn it in!");
+                                //what happens after finding the correct Item
+                                cells[x][y].setFill(free);
+                                if(!valuables.isEmpty()){
+                                    valuables.remove(quest);
+//                                    greenCells.remove(quest.getLocation());
+                                }
                             }
                         }
                     } else if (EventController.isTrap(newcoords)) {
-                        System.out.println("Encountered Trap");
+                        int lost,loop=0;
+                        while(loop == 0){
+                            loot = lootValue.nextInt(3)+1;
+                            switch (loot){
+                                case 1:
+                                    lost = lootValue.nextInt(6)+1;
+                                    if(getMoves()>0){
+                                        moves--;
+                                        Message.setText("You encountered a trap and got injured\nMoves reduced by "+ lost);
+                                        loop++;
+                                    }
+                                    break;
+                                case 2:
+                                    lost = lootValue.nextInt(100)+1;
+                                    if(currPlayer.getWealth()>lost){
+                                        currPlayer.setWealth(-1*lost);
+                                        Message.setText("You encountered a trap and lost $"+ lost);
+                                        loop++;
+                                    }
+                                    break;
+                                case 3:
+                                    lost = lootValue.nextInt(10)+1;
+                                    if(currPlayer.getPower()>lost){
+                                        currPlayer.setPower(-1*lost);
+                                        Message.setText("You encountered a trap and lost "+ lost+" power");
+                                        loop++;
+                                    }
+                                    break;
+                                default:
+                                    System.out.println("Loot to be lost is undetermined.");
+                                    break;
+                            }
+                        }
+                        redCells.remove(currPlayer.getPlayerCoords());
+                        cells[currPlayer.getPlayerCoords().getX()][currPlayer.getPlayerCoords().getY()].setFill(free);
                     }
 
                 }
@@ -703,6 +752,19 @@ public class GameController {
             displayStats(currPlayer);
             upadateMiniMap(currPlayer);
         }
+    }
+
+    //method to check if a player has encountered the quest items' location
+    protected boolean questInPath(Player player){
+        boolean flag = false;
+        if(player.getPlayerPath().size()>1){
+            for(int i = 0; i<player.getPlayerPath().size()-1;i++){
+                if(player.getPlayerPath().get(i)==quest.getLocation()){
+                    flag = true;
+                }
+            }
+        }
+        return flag;
     }
 
     //displaying a players stats onto the side
@@ -750,6 +812,7 @@ public class GameController {
         statsController.setP2Score(player2.getScore());
         statsController.setP2Wealth(player2.getWealth());
         statsController.setStartTimeMillis(startTimeMillis);
+        statsController.setQuestCounter(8-valuables.size());
         return statsController;
     }
 
@@ -792,32 +855,32 @@ public class GameController {
         return cells;
     }
 
-    public ArrayList<Coords> getBlackcells() {
-        return Blackcells;
+    public ArrayList<Coords> getBlackCells() {
+        return blackCells;
     }
 
-    public ArrayList<Coords> getOrangecells() {
-        return Orangecells;
+    public ArrayList<Coords> getOrangeCells() {
+        return orangeCells;
     }
 
-    public ArrayList<Coords> getGreencells() {
-        return Greencells;
+    public ArrayList<Coords> getGreenCells() {
+        return greenCells;
     }
 
-    public ArrayList<Coords> getBluecells() {
-        return Bluecells;
+    public ArrayList<Coords> getBlueCells() {
+        return blueCells;
     }
 
-    public ArrayList<Coords> getYellowcells() {
-        return Yellowcells;
+    public ArrayList<Coords> getYellowCells() {
+        return yellowCells;
     }
 
-    public ArrayList<Coords> getRedcells() {
-        return Redcells;
+    public ArrayList<Coords> getRedCells() {
+        return redCells;
     }
 
-    public ArrayList<Coords> getPlayerspawn() {
-        return Playerspawn;
+    public ArrayList<Coords> getPlayerSpawn() {
+        return playerSpawn;
     }
 
     public GridPane getMainMap() {
