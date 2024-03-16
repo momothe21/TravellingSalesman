@@ -61,7 +61,7 @@ public class GameController {
     @FXML
     private Label Message;
     @FXML
-    private ImageView diceImage;
+    private ImageView diceImage, weapon;
     @FXML
     private GridPane mainMap, mainMap1;
     protected Rectangle[][] cells = new Rectangle[10][10];
@@ -74,8 +74,10 @@ public class GameController {
     protected ArrayList<Coords> greenCells = new ArrayList<Coords>();
     protected ArrayList<Coords> greenCellsPath = new ArrayList<Coords>();
     protected ArrayList<Coords> blueCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> blueCellsPath = new ArrayList<Coords>();
     protected ArrayList<Coords> yellowCells = new ArrayList<Coords>();
     protected ArrayList<Coords> redCells = new ArrayList<Coords>();
+    protected ArrayList<Coords> redCellsPath = new ArrayList<Coords>();
     protected ArrayList<Coords> playerSpawn = new ArrayList<Coords>();
     protected ArrayList<Treasures> valuables = new ArrayList<Treasures>();
     @FXML
@@ -230,6 +232,7 @@ public class GameController {
                     }else if (color>=32 && color<=42) {
                         cell.setFill(red);
                         redCells.add(new Coords(i,j));
+                        redCellsPath.add(new Coords(i,j));
                     }else {
                         //default
                         cell.setFill(free);
@@ -263,9 +266,14 @@ public class GameController {
                     if(color1 != yellow){
                         if((new Coords(x,y)).distanceCalc(yellowCells)>1){
                             if((new Coords(x,y)).distanceCalc(playerSpawn)>0){
-                                //assigning blues
-                                cells[x][y].setFill(blue);
-                                blueCells.add(new Coords(x,y));
+                                if(color1 != red){
+                                    //assigning blues
+                                    cells[x][y].setFill(blue);
+                                    blueCells.add(new Coords(x,y));
+                                    blueCellsPath.add(new Coords(x,y));
+                                }else {
+                                    i--;
+                                }
                             }else{
                                 i--;
                             }
@@ -298,10 +306,15 @@ public class GameController {
                         if(color1!=blue){
                             if((new Coords(x,y)).distanceCalc(yellowCells)>1){
                                 if((new Coords(x,y)).distanceCalc(playerSpawn)>2){
-                                    cells[x][y].setFill(green);
-                                    greenCells.add(new Coords(x,y));
-                                    greenCellsPath.add(new Coords(x,y));
-                                    valuables.get(i).setLocation(new Coords(x,y));
+                                    //checking if it overlaps traps
+                                    if(color1 != red){
+                                        cells[x][y].setFill(green);
+                                        greenCells.add(new Coords(x,y));
+                                        greenCellsPath.add(new Coords(x,y));
+                                        valuables.get(i).setLocation(new Coords(x,y));
+                                    }else {
+                                        i--;
+                                    }
                                 }else{
                                     i--;
                                 }
@@ -337,8 +350,12 @@ public class GameController {
                             //checking if it overlaps the blues
                             if (color1 != blue) {
                                 if((new Coords(x,y)).distanceCalc(playerSpawn)>0){
-                                    cells[x][y].setFill(orange);
-                                    orangeCells.add(new Coords(x,y));
+                                    if(color1 != red){
+                                        cells[x][y].setFill(orange);
+                                        orangeCells.add(new Coords(x,y));
+                                    }else {
+                                        i--;
+                                    }
                                 }else{
                                     i--;
                                 }
@@ -363,6 +380,14 @@ public class GameController {
 
         //assigning quest
         setQuest();
+
+        //making the map "invisible"
+//        for(int i = 0; i < 10; i++){
+//            for(int j = 0; j<10;j++){
+//                cells[i][j].setFill(free);
+//            }
+//        }
+
     }
 
     //method to roll dice using key
@@ -498,10 +523,21 @@ public class GameController {
         for(int i = 0; i < player.getPlayerPathMap().size();i++){
             x= player.getPlayerPathMap().get(i).getX();
             y= player.getPlayerPathMap().get(i).getY();
-            if(x!=quest.getLocation().getX()||y != quest.getLocation().getY()){
-                curcolor = cells[x][y].getFill();
-            }else {
+            Coords temp = new Coords(x,y);
+            if(redCellsPath.contains(temp)){
+                curcolor = red;
+            } else if(blueCellsPath.contains(temp)){
+                curcolor = blue;
+            } else if (greenCellsPath.contains(temp)) {
                 curcolor = green;
+            } else if (blackCells.contains(temp)) {
+                curcolor = black;
+            } else if (yellowCells.contains(temp)) {
+                curcolor = yellow;
+            } else if (orangeCells.contains(temp)) {
+                curcolor = orange;
+            }else {
+                curcolor = free;
             }
             cellsMini[x][y].setFill(curcolor);
         }
@@ -521,6 +557,9 @@ public class GameController {
         //creating the players as well
         player1 = new Player(playerOne,new Coords(-1,-1),1);
         player2 = new Player(playerTwo,new Coords(-2,-2),2);
+
+        player1.setWeapon(Player.Weapons.Bow);
+        player2.setWeapon(Player.Weapons.Sword);
     }
 
     //method to go back to menu
@@ -721,8 +760,12 @@ public class GameController {
 
                         }
                     } else if (EventController.isTrap(newcoords)) {
-                        int lost,loop=0;
+                        int lost,loop=0,counter=0;
                         while(loop == 0){
+                            if(counter>1000){
+                                Message.setText("You encountered a trap but due to you being so pitiful\nand weak we will show mercy.");
+                                break;
+                            }
                             loot = lootValue.nextInt(3)+1;
                             switch (loot){
                                 case 1:
@@ -732,6 +775,7 @@ public class GameController {
                                         Message.setText("You encountered a trap and got injured\nMoves reduced by "+ lost);
                                         loop++;
                                     }
+                                    counter++;
                                     break;
                                 case 2:
                                     lost = lootValue.nextInt(100)+1;
@@ -740,6 +784,7 @@ public class GameController {
                                         Message.setText("You encountered a trap and lost $"+ lost);
                                         loop++;
                                     }
+                                    counter++;
                                     break;
                                 case 3:
                                     lost = lootValue.nextInt(10)+1;
@@ -748,6 +793,7 @@ public class GameController {
                                         Message.setText("You encountered a trap and lost "+ lost+" power");
                                         loop++;
                                     }
+                                    counter++;
                                     break;
                                 default:
                                     System.out.println("Loot to be lost is undetermined.");
@@ -799,6 +845,7 @@ public class GameController {
                                 survivor.getPlayerPath().add(quest.getLocation());
                                 Message.setText("Player "+ survivor.getPlayernum()+" stole the map location.\nThey can now give the location to the castle.");
                             }
+                            dead.setWeapon(null);
                         }
                     }
                 }
@@ -832,6 +879,24 @@ public class GameController {
         scoreLabel.setText(""+player.getScore());
         wealthLabel.setText(wealth);
         powerLabel.setText(""+player.getPower());
+        if(player.getWeapon() != null){
+            switch (player.getWeapon()){
+                case Bow:
+                    weapon.setImage(new Image("Bow.png"));
+                    break;
+                case Sword:
+                    weapon.setImage(new Image("sword.png"));
+                    break;
+                case Hammer:
+                    weapon.setImage(new Image("hammer.png"));
+                    break;
+                default:
+                    System.out.println("somehow you have a weapon that I didn't program?");
+                    break;
+            }
+        }else {
+            weapon.setImage(null);
+        }
     }
 
     //method to open a new window
@@ -867,9 +932,11 @@ public class GameController {
         statsController.setP1Power(player1.getPower());
         statsController.setP1Score(player1.getScore());
         statsController.setP1Wealth(player1.getWealth());
+        statsController.setP1Weapon(player1.getWeapon());
         statsController.setP2Power(player2.getPower());
         statsController.setP2Score(player2.getScore());
         statsController.setP2Wealth(player2.getWealth());
+        statsController.setP2Weapon(player2.getWeapon());
         statsController.setStartTimeMillis(startTimeMillis);
         statsController.setQuestCounter(8-valuables.size());
         return statsController;

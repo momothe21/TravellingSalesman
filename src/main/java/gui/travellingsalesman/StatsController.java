@@ -5,8 +5,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -14,6 +14,7 @@ import javafx.util.Duration;
 
 public class StatsController {
     //attributes etc
+    private Player.Weapons p1Weapon,p2Weapon;
     Stage stage;
     private double p1Score,p2Score,p1Wealth, p2Wealth,p1Power,p2Power;
     private int questCounter;
@@ -57,11 +58,14 @@ public class StatsController {
     //method to update labels with values
     @FXML
     protected void display(){
+        String wealth1, wealth2;
+        wealth1 = String.format("%.1f",getP1Wealth());
+        wealth2 = String.format("%.1f",getP2Wealth());
         //displaying the labels
         p1PowerLabel.setText(""+getP1Power());
         p2PowerLabel.setText(""+getP2Power());
-        p1WealthLabel.setText(""+getP1Wealth());
-        p2WealthLabel.setText(""+getP2Wealth());
+        p1WealthLabel.setText(wealth1);
+        p2WealthLabel.setText(wealth2);
         p1ScoreLabel.setText(""+getP1Score());
         p2ScoreLabel.setText(""+getP2Score());
         questLabel.setText(getQuest().getName().toString());
@@ -71,6 +75,38 @@ public class StatsController {
             turnLabel.setText("Player 2");
         }else {
             turnLabel.setText("Player 1");
+        }
+        if(p1Weapon != null){
+            switch (p1Weapon){
+                case Bow:
+                    p1WeaponImage.setImage(new Image("Bow.png"));
+                    break;
+                case Sword:
+                    p1WeaponImage.setImage(new Image("sword.png"));
+                    break;
+                case Hammer:
+                    p1WeaponImage.setImage(new Image("hammer.png"));
+                    break;
+                default:
+                    System.out.println("somehow you have a weapon that I didn't program?");
+                    break;
+            }
+        }
+        if(p2Weapon != null){
+            switch (p2Weapon){
+                case Bow:
+                    p2WeaponImage.setImage(new Image("Bow.png"));
+                    break;
+                case Sword:
+                    p2WeaponImage.setImage(new Image("sword.png"));
+                    break;
+                case Hammer:
+                    p2WeaponImage.setImage(new Image("hammer.png"));
+                    break;
+                default:
+                    System.out.println("somehow you have a weapon that I didn't program?");
+                    break;
+            }
         }
     }
 
@@ -168,5 +204,21 @@ public class StatsController {
 
     public void setQuestCounter(int questCounter) {
         this.questCounter = questCounter;
+    }
+
+    public Player.Weapons getP1Weapon() {
+        return p1Weapon;
+    }
+
+    public void setP1Weapon(Player.Weapons p1Weapon) {
+        this.p1Weapon = p1Weapon;
+    }
+
+    public Player.Weapons getP2Weapon() {
+        return p2Weapon;
+    }
+
+    public void setP2Weapon(Player.Weapons p2Weapon) {
+        this.p2Weapon = p2Weapon;
     }
 }
