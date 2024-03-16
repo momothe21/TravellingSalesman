@@ -59,22 +59,22 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="timerLabel" layoutX="35.0" layoutY="289.0" text="Round Time: 00:00:00">
+      <Label fx:id="timerLabel" layoutX="35.0" layoutY="269.0" text="Round Time: 00:00:00">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="251.0" text="Player's Turn:">
+      <Label layoutX="33.0" layoutY="231.0" text="Player's Turn:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="365.0" layoutY="227.0" text="Quest Item:">
+      <Label layoutX="365.0" layoutY="232.0" text="Quest Item:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="turnLabel" layoutX="156.0" layoutY="251.0" text="Label">
+      <Label fx:id="turnLabel" layoutX="156.0" layoutY="231.0" text="Label">
          <font>
             <Font size="20.0" />
          </font>
@@ -97,13 +97,18 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="questImage" fitHeight="85.0" fitWidth="117.0" layoutX="429.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="questLabel" layoutX="369.0" layoutY="251.0" text="Label">
+      <ImageView fx:id="questImage" fitHeight="85.0" fitWidth="117.0" layoutX="430.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="questLabel" layoutX="369.0" layoutY="256.0" text="Label">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="questCounterLabel" layoutX="33.0" layoutY="332.0" text="Items found: 0">
+      <Label fx:id="questCounterLabel" layoutX="33.0" layoutY="302.0" text="Items found: 0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="questCounterLabel1" layoutX="33.0" layoutY="330.0" text="Items not found: 0">
          <font>
             <Font size="20.0" />
          </font>

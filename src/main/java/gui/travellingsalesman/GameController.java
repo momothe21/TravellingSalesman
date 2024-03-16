@@ -419,9 +419,11 @@ public class GameController {
         if(turns%2==0){
             turn.setText("Player 2");
             displayStats(player2);
+            updateMiniMap(player2);
         }else{
             turn.setText("Player 1");
             displayStats(player1);
+            updateMiniMap(player1);
         }
 
 
@@ -788,6 +790,14 @@ public class GameController {
                                 dead.getSelf().setLayoutX(446);
                                 dead.getSelf().setLayoutY(143);
                                 gameWindow.getChildren().add(dead.getSelf());
+                            }
+                            //removing the dead players treasure if they have it
+                            if(dead.getPlayerPath().contains(quest.getLocation())){
+                                dead.getPlayerPath().remove(quest.getLocation());
+                                dead.getPlayerPathMap().remove(quest.getLocation());
+                                survivor.getPlayerPathMap().add(quest.getLocation());
+                                survivor.getPlayerPath().add(quest.getLocation());
+                                Message.setText("Player "+ survivor.getPlayernum()+" stole the map location.\nThey can now give the location to the castle.");
                             }
                         }
                     }

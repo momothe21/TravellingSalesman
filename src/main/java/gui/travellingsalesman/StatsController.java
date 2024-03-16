@@ -23,7 +23,7 @@ public class StatsController {
     @FXML
     private AnchorPane statsWindow;
     @FXML
-    private Label questCounterLabel, p1ScoreLabel,p2ScoreLabel,p1WealthLabel,timerLabel, p2WealthLabel,p1PowerLabel,p2PowerLabel,questLabel, turnLabel;
+    private Label questCounterLabel, questCounterLabel1, p1ScoreLabel,p2ScoreLabel,p1WealthLabel,timerLabel, p2WealthLabel,p1PowerLabel,p2PowerLabel,questLabel, turnLabel;
     @FXML
     private ImageView p1WeaponImage,p2WeaponImage,questImage;
 
@@ -66,6 +66,7 @@ public class StatsController {
         p2ScoreLabel.setText(""+getP2Score());
         questLabel.setText(getQuest().getName().toString());
         questCounterLabel.setText("Items found: "+questCounter);
+        questCounterLabel1.setText("Items not found: "+(8-questCounter));
         if(turn%2==0){
             turnLabel.setText("Player 2");
         }else {
