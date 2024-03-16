@@ -419,11 +419,9 @@ public class GameController {
         if(turns%2==0){
             turn.setText("Player 2");
             displayStats(player2);
-            upadateMiniMap(player2);
         }else{
             turn.setText("Player 1");
             displayStats(player1);
-            upadateMiniMap(player1);
         }
 
 
@@ -484,7 +482,7 @@ public class GameController {
 
     //method to update map with players current path
     @FXML
-    protected void upadateMiniMap(Player player){
+    protected void updateMiniMap(Player player){
         //variables
         int x,y;
         Paint curcolor;
@@ -495,10 +493,14 @@ public class GameController {
             }
         }
         //colouring in the players path
-        for(int i = 0; i < player.getPlayerPath().size();i++){
-            x= player.getPlayerPath().get(i).getX();
-            y= player.getPlayerPath().get(i).getY();
-            curcolor = cells[x][y].getFill();
+        for(int i = 0; i < player.getPlayerPathMap().size();i++){
+            x= player.getPlayerPathMap().get(i).getX();
+            y= player.getPlayerPathMap().get(i).getY();
+            if(x!=quest.getLocation().getX()||y != quest.getLocation().getY()){
+                curcolor = cells[x][y].getFill();
+            }else {
+                curcolor = green;
+            }
             cellsMini[x][y].setFill(curcolor);
         }
     }
@@ -590,7 +592,7 @@ public class GameController {
         //variables and classes
         Random lootValue = new Random();
         int loot = 0;
-        Player currPlayer;
+        Player currPlayer,survivor = null,dead = null;
         if(turns %2 ==0){
             currPlayer = player2;
         }else {
@@ -639,11 +641,13 @@ public class GameController {
                             break;
                     }
                     currPlayer.getPlayerPath().add(special);
+                    currPlayer.getPlayerPathMap().add(special);
                 }
                 newcoords = currPlayer.getPlayerCoords();
                 if(newcoords != currcoords){
                     moves--;
                     currPlayer.getPlayerPath().add(newcoords);
+                    currPlayer.getPlayerPathMap().add(newcoords);
                     Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
 
                     //checking if the current location is special
@@ -654,11 +658,14 @@ public class GameController {
                         blueCells.remove(currPlayer.getPlayerCoords());
                         cells[currPlayer.getPlayerCoords().getX()][currPlayer.getPlayerCoords().getY()].setFill(free);
                     }else if(EventController.isCastle(newcoords)){
-                        if(currPlayer.getPlayerPath().contains(quest.getLocation())){
+                        if(currPlayer.getPlayerPath().contains(quest.getLocation())&&cells[quest.getLocation().getX()][quest.getLocation().getY()].getFill()==free){
                             currPlayer.setWealth(quest.getScore());
                             currPlayer.setScore(1);
                             if(!valuables.isEmpty()){
                                 setQuest();
+                                valuables.remove(quest);
+                                greenCells.remove(quest.getLocation());
+                                //removing the quest location from player path
                                 player1.getPlayerPath().remove(quest.getLocation());
                                 player2.getPlayerPath().remove(quest.getLocation());
                             }else{
@@ -687,7 +694,9 @@ public class GameController {
                                     Message.setText("This game ended in a surprising perfect draw!");
                                 }
                             }
+                            //resetting the player's path and map
                             currPlayer.setPlayerPath(new ArrayList<Coords>());
+                            currPlayer.setPlayerPathMap(new ArrayList<Coords>());
                         }
                     } else if (EventController.isMarket(newcoords)) {
                         //last one to be implemented
@@ -703,11 +712,11 @@ public class GameController {
                                 Message.setText("You found the quest item "+quest.getName().toString()+".\n Go to the castle to turn it in!");
                                 //what happens after finding the correct Item
                                 cells[x][y].setFill(free);
-                                if(!valuables.isEmpty()){
-                                    valuables.remove(quest);
-//                                    greenCells.remove(quest.getLocation());
-                                }
                             }
+                        }else {
+                            //removing the players quest in their path
+                            currPlayer.getPlayerPath().removeLast();
+
                         }
                     } else if (EventController.isTrap(newcoords)) {
                         int lost,loop=0;
@@ -746,11 +755,47 @@ public class GameController {
                         redCells.remove(currPlayer.getPlayerCoords());
                         cells[currPlayer.getPlayerCoords().getX()][currPlayer.getPlayerCoords().getY()].setFill(free);
                     }
-
+                    //checking if the players encountered each other to implement the "fight"
+                    if(EventController.isFight(player1,player2)){
+                        //checking who wins
+                        if(player1.getPower()>player2.getPower()){
+                            survivor = player1;
+                            dead = player2;
+                        } else if (player1.getPower()<player2.getPower()) {
+                            survivor = player2;
+                            dead = player1;
+                        }
+                        //removing corpse and setting new power levels
+                        if(dead != null && survivor != null){
+                            //money earned from fight
+                            double money;
+                            mainMap.getChildren().remove(dead.getSelf());
+                            //setting the players' wealth
+                            money = ((survivor.getPower()-dead.getPower())/(survivor.getPower()+dead.getPower()))*dead.getWealth();
+                            survivor.setWealth(money);
+                            dead.setWealth(-money);
+                            //setting the power of players
+                            survivor.setPower(-dead.getPower());
+                            dead.setPower(-dead.getPower()+10);
+                            dead.setPlayerCoords(new Coords(-1,-1));
+                            //spawning players in their spawn points
+                            if(dead != player1){
+                                dead.getSelf().setLayoutX(446);
+                                dead.getSelf().setLayoutY(290);
+                                //putting a player somewhere on screen
+                                gameWindow.getChildren().add(dead.getSelf());
+                            }else {
+                                dead.getSelf().setLayoutX(446);
+                                dead.getSelf().setLayoutY(143);
+                                gameWindow.getChildren().add(dead.getSelf());
+                            }
+                        }
+                    }
                 }
             }
+            //displaying the result of the movement
             displayStats(currPlayer);
-            upadateMiniMap(currPlayer);
+            updateMiniMap(currPlayer);
         }
     }
 
@@ -759,8 +804,9 @@ public class GameController {
         boolean flag = false;
         if(player.getPlayerPath().size()>1){
             for(int i = 0; i<player.getPlayerPath().size()-1;i++){
-                if(player.getPlayerPath().get(i)==quest.getLocation()){
+                if (player.getPlayerPath().get(i).equals(quest.getLocation())) {
                     flag = true;
+                    break;
                 }
             }
         }
@@ -770,8 +816,11 @@ public class GameController {
     //displaying a players stats onto the side
     @FXML
     protected void displayStats(Player player){
+        String wealth;
+        //formatting the wealth
+        wealth = String.format("%.1f", player.getWealth());
         scoreLabel.setText(""+player.getScore());
-        wealthLabel.setText(""+player.getWealth());
+        wealthLabel.setText(wealth);
         powerLabel.setText(""+player.getPower());
     }
 

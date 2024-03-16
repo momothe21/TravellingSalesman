@@ -14,34 +14,34 @@ public class EventController {
     protected static ArrayList<Coords> castle = new ArrayList<Coords>();
 
 
+    //method to check if two players meet
+    public static boolean isFight(Player player1, Player player2){
+        return player1.getPlayerCoords().equals(player2.getPlayerCoords());
+    }
+
     //method to check if currently in a special space
     //traps
     public static boolean isTrap(Coords space){
-
         return traps.contains(space);
     }
 
     //markets
     public static boolean isMarket(Coords space){
-
         return markets.contains(space);
     }
 
     //items
     public static boolean isItem(Coords space){
-
         return items.contains(space);
     }
 
     //treasure
     public static boolean isTreasure(Coords space){
-
         return treasure.contains(space);
     }
 
     //castle
     public static boolean isCastle(Coords space){
-
         return castle.contains(space);
     }
 

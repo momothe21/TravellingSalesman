@@ -12,6 +12,7 @@ public class Player{
     private final int playernum;
     private Coords playerCoords;
     private ArrayList<Coords> playerPath=new ArrayList<Coords>();
+    private ArrayList<Coords> playerPathMap=new ArrayList<Coords>();
     private double score=0;
     private double wealth=0;
     private double power=10;
@@ -19,14 +20,6 @@ public class Player{
     private GridPane map;
 
     private Circle self;
-
-    //method for when player encounters item
-    protected void encounteredItem(){}
-
-    //method for when player encounters Treasure
-    protected void encounteredTreasure(){
-
-    }
 
 
     //method to move player
@@ -62,9 +55,11 @@ public class Player{
             if(playernum%2!=0){
                 setPlayerCoords(new Coords(0,0));
                 playerPath.add(new Coords(0,0));
+                playerPathMap.add(new Coords(0,0));
             }else {
                 setPlayerCoords(new Coords(9,9));
                 playerPath.add(new Coords(9,9));
+                playerPathMap.add(new Coords(9,9));
             }
             if(getSelf() == null){
                 System.out.println("The player circle is null for some reason");
@@ -150,5 +145,13 @@ public class Player{
 
     public int getPlayernum() {
         return playernum;
+    }
+
+    public ArrayList<Coords> getPlayerPathMap() {
+        return playerPathMap;
+    }
+
+    public void setPlayerPathMap(ArrayList<Coords> playerPathMap) {
+        this.playerPathMap = playerPathMap;
     }
 }
