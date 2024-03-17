@@ -976,7 +976,6 @@ public class GameController {
             MarketController marketController = loader1.getController();
             marketController.setPlayer(player);
             marketController.setStage2(stage2);
-            marketController.setShopturn(turns);
             marketController.display();
         }else {
             Message.setText("Can not access shop, need to be in market!");
