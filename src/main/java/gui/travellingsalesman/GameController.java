@@ -663,6 +663,7 @@ public class GameController {
                             break;
                     }
                 }else{
+                    //checking for walls
                     special.setY(currcoords.getY());
                     special.setX(currcoords.getX());
                     switch (direction){
@@ -873,12 +874,13 @@ public class GameController {
     //displaying a players stats onto the side
     @FXML
     protected void displayStats(Player player){
-        String wealth;
-        //formatting the wealth
+        String wealth,power;
+        //formatting the wealth and power
         wealth = String.format("%.1f", player.getWealth());
+        power = String.format("%.1f", (player.getPower()+player.getItemPower()));
         scoreLabel.setText(""+player.getScore());
         wealthLabel.setText(wealth);
-        powerLabel.setText(""+player.getPower());
+        powerLabel.setText(power);
         if(player.getWeapon() != null){
             switch (player.getWeapon()){
                 case Bow:
@@ -899,7 +901,7 @@ public class GameController {
         }
     }
 
-    //method to open a new window
+    //method to open a stats window
     @FXML
     protected void statsBoard(MouseEvent event) throws IOException{
         if(rolledNum != 0){
@@ -945,6 +947,40 @@ public class GameController {
     //method to enable the window again
     protected static void showGame(){
         stage.show();
+    }
+
+    //method to open a market window
+    @FXML
+    protected void marketShop(ActionEvent event) throws IOException{
+        Player player;
+        if(turns %2==0){
+            player = player2;
+        }else {
+            player = player1;
+        }
+
+        if(orangeCells.contains(player.getPlayerCoords())){
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("market-view.fxml"));
+            Stage stage2 = new Stage();
+            Parent root2 = loader1.load();
+
+            Image icon = new Image("icon.png");
+            stage2.getIcons().add(icon);
+
+            Scene shop = new Scene(root2);
+
+            stage2.setScene(shop);
+            stage2.show();
+            stage.getScene().getWindow();
+            stage.getScene().getWindow().hide();
+            MarketController marketController = loader1.getController();
+            marketController.setPlayer(player);
+            marketController.setStage2(stage2);
+            marketController.setShopturn(turns);
+            marketController.display();
+        }else {
+            Message.setText("Can not access shop, need to be in market!");
+        }
     }
 
 
@@ -1024,5 +1060,13 @@ public class GameController {
         quest = valuables.get(num);
         this.quest = quest;
         questLabel.setText(quest.getName().toString());
+    }
+
+    public int getTurns() {
+        return turns;
+    }
+
+    public void setTurns(int turns) {
+        this.turns = turns;
     }
 }

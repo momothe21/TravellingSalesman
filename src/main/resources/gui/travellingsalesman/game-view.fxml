@@ -86,7 +86,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-        <Button fx:id="buy" focusTraversable="false" layoutX="213.0" layoutY="407.0" mnemonicParsing="false" text="Buy" />
+        <Button fx:id="buy" focusTraversable="false" layoutX="213.0" layoutY="407.0" mnemonicParsing="false" onAction="#marketShop" text="Buy" />
         <Label layoutX="11.0" layoutY="407.0" onMouseClicked="#statsBoard" text="LeaderBoard Information">
             <font>
                 <Font name="System Bold" size="16.0" />

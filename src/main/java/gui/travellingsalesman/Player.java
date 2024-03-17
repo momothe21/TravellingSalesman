@@ -16,6 +16,7 @@ public class Player{
     private double score=0;
     private double wealth=0;
     private double power=10;
+    private double itemPower = 0;
     private Weapons weapon;
     private GridPane map;
 
@@ -153,5 +154,13 @@ public class Player{
 
     public void setPlayerPathMap(ArrayList<Coords> playerPathMap) {
         this.playerPathMap = playerPathMap;
+    }
+
+    public double getItemPower() {
+        return itemPower;
+    }
+
+    public void setItemPower(double itemPower) {
+        this.itemPower = itemPower;
     }
 }
