@@ -9,7 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -638,6 +640,10 @@ public class GameController {
     //method to filter the input
     public void movingPlayer(KeyCode direction){
         //variables and classes
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Weird Movement");
+        alert.setHeaderText("You are moving back on yourself");
+        alert.setContentText("Are you sure you want to do that?");
         Random lootValue = new Random();
         int loot = 0;
         Player currPlayer,survivor = null,dead = null;
@@ -657,27 +663,43 @@ public class GameController {
                         case UP, W:
                             //this is for section 7.2.1
                             if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()-1))){
-                                System.out.println("You are back tracking, warning!");
+                                if(alert.showAndWait().get() == ButtonType.OK){
+                                    currPlayer.move(0,-1);
+                                }
+                            }else {
+                                currPlayer.move(0,-1);
                             }
-                            currPlayer.move(0,-1);
+//                            currPlayer.move(0,-1);
                             break;
                         case DOWN, S:
                             if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()+1))){
-                                System.out.println("You are back tracking, warning!");
+                                if(alert.showAndWait().get() == ButtonType.OK){
+                                    currPlayer.move(0,1);
+                                }
+                            }else {
+                                currPlayer.move(0,1);
                             }
-                            currPlayer.move(0,1);
+                            //currPlayer.move(0,1);
                             break;
                         case LEFT, A:
                             if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()-1,currPlayer.getPlayerCoords().getY()))){
-                                System.out.println("You are back tracking, warning!");
+                                if(alert.showAndWait().get() == ButtonType.OK){
+                                    currPlayer.move(-1,0);
+                                }
+                            }else {
+                                currPlayer.move(-1,0);
                             }
-                            currPlayer.move(-1,0);
+//                            currPlayer.move(-1,0);
                             break;
                         case RIGHT, D:
-                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()+1,currPlayer.getPlayerCoords().getY()))){
-                                System.out.println("You are back tracking, warning!");
+                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()+1,currPlayer.getPlayerCoords().getY()-1))){
+                                if(alert.showAndWait().get() == ButtonType.OK){
+                                    currPlayer.move(1,0);
+                                }
+                            }else {
+                                currPlayer.move(1,0);
                             }
-                            currPlayer.move(1,0);
+//                            currPlayer.move(1,0);
                             break;
                         default:
                             break;
