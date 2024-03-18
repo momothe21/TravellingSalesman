@@ -451,7 +451,6 @@ public class GameController {
             updateMiniMap(player1);
         }
 
-
         //setting the rolled image
         switch (rolledNum){
             case 1:
@@ -558,8 +557,9 @@ public class GameController {
         player1 = new Player(playerOne,new Coords(-1,-1),1);
         player2 = new Player(playerTwo,new Coords(-2,-2),2);
 
-        player1.setWeapon(Player.Weapons.Bow);
-        player2.setWeapon(Player.Weapons.Sword);
+        //testing
+//        player1.setWeapon(Player.Weapons.Bow);
+//        player2.setWeapon(Player.Weapons.Sword);
     }
 
     //method to go back to menu
@@ -626,6 +626,13 @@ public class GameController {
                 movingPlayer(keyEvent.getCode());
             }
         });
+        if(turns%2==0){
+            displayStats(player2);
+            updateMiniMap(player2);
+        }else {
+            displayStats(player1);
+            updateMiniMap(player1);
+        }
     }
 
     //method to filter the input
@@ -648,15 +655,28 @@ public class GameController {
                 if(EventController.canMove(currcoords,direction)){
                     switch (direction){
                         case UP, W:
+                            //this is for section 7.2.1
+                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()-1))){
+                                System.out.println("You are back tracking, warning!");
+                            }
                             currPlayer.move(0,-1);
                             break;
                         case DOWN, S:
+                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()+1))){
+                                System.out.println("You are back tracking, warning!");
+                            }
                             currPlayer.move(0,1);
                             break;
                         case LEFT, A:
+                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()-1,currPlayer.getPlayerCoords().getY()))){
+                                System.out.println("You are back tracking, warning!");
+                            }
                             currPlayer.move(-1,0);
                             break;
                         case RIGHT, D:
+                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()+1,currPlayer.getPlayerCoords().getY()))){
+                                System.out.println("You are back tracking, warning!");
+                            }
                             currPlayer.move(1,0);
                             break;
                         default:
@@ -741,8 +761,7 @@ public class GameController {
                             currPlayer.setPlayerPathMap(new ArrayList<Coords>());
                         }
                     } else if (EventController.isMarket(newcoords)) {
-                        //last one to be implemented
-                        System.out.println("Encountered Market");
+                        Message.setText("You may press buy to look at shop.");
                     } else if (EventController.isTreasure(newcoords)) {
                         //checking if anyone already encountered the quest treasure before the current treasure tile
                         if(!(questInPath(player1)||questInPath(player2))){
@@ -813,6 +832,14 @@ public class GameController {
                         } else if (player1.getPower()<player2.getPower()) {
                             survivor = player2;
                             dead = player1;
+                        }else {
+                            if(turns%2==0){
+                                survivor =player2;
+                                dead = player1;
+                            }else {
+                                survivor = player1;
+                                dead = player2;
+                            }
                         }
                         //removing corpse and setting new power levels
                         if(dead != null && survivor != null){
@@ -976,6 +1003,7 @@ public class GameController {
             MarketController marketController = loader1.getController();
             marketController.setPlayer(player);
             marketController.setStage2(stage2);
+            marketController.setTreasures(valuables);
             marketController.display();
         }else {
             Message.setText("Can not access shop, need to be in market!");

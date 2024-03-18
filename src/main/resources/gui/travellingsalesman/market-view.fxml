@@ -7,81 +7,81 @@
 
 <AnchorPane prefHeight="605.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.travellingsalesman.MarketController">
    <children>
-      <Label layoutX="14.0" layoutY="7.0" text="King's Sword">
+      <Label layoutX="14.0" layoutY="7.0" onMouseClicked="#purchaseSword" text="King's Sword">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Label layoutX="438.0" layoutY="7.0" text="Sniper's Bow">
+      <Label layoutX="438.0" layoutY="7.0" onMouseClicked="#purchaseBow" text="Sniper's Bow">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Label layoutX="212.0" layoutY="7.0" text="Thor's Hammer">
+      <Label layoutX="212.0" layoutY="7.0" onMouseClicked="#purchaseHammer" text="Thor's Hammer">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="24.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="24.0" layoutY="46.0" onMouseClicked="#purchaseSword" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/weapons/sword.png" />
          </image></ImageView>
-      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="236.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="236.0" layoutY="46.0" onMouseClicked="#purchaseHammer" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/weapons/hammer.png" />
          </image></ImageView>
-      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="447.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="447.0" layoutY="46.0" onMouseClicked="#purchaseBow" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/weapons/Bow.png" />
          </image></ImageView>
-      <Label fx:id="swordPower" layoutX="14.0" layoutY="172.0" text="Power: ">
+      <Label fx:id="swordPower" layoutX="14.0" layoutY="172.0" onMouseClicked="#purchaseSword" text="Power: ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="swordCost" layoutX="14.0" layoutY="202.0" text="Cost:    ">
+      <Label fx:id="swordCost" layoutX="14.0" layoutY="202.0" onMouseClicked="#purchaseSword" text="Cost:    ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="hammerPower" layoutX="220.0" layoutY="172.0" text="Power: ">
+      <Label fx:id="hammerPower" layoutX="220.0" layoutY="172.0" onMouseClicked="#purchaseHammer" text="Power: ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="hammerCost" layoutX="220.0" layoutY="202.0" text="Cost:    ">
+      <Label fx:id="hammerCost" layoutX="220.0" layoutY="202.0" onMouseClicked="#purchaseHammer" text="Cost:    ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="bowPower" layoutX="431.0" layoutY="172.0" text="Power: ">
+      <Label fx:id="bowPower" layoutX="431.0" layoutY="172.0" onMouseClicked="#purchaseBow" text="Power: ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="bowCost" layoutX="431.0" layoutY="202.0" text="Cost:    ">
+      <Label fx:id="bowCost" layoutX="431.0" layoutY="202.0" onMouseClicked="#purchaseBow" text="Cost:    ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="69.0" layoutY="232.0" text="Recovery potion">
+      <Label layoutX="69.0" layoutY="232.0" onMouseClicked="#purchasePotion" text="Recovery potion">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="69.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="potionCost" layoutX="69.0" layoutY="401.0" text="Cost:    ">
+      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="69.0" layoutY="271.0" onMouseClicked="#purchasePotion" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="potionCost" layoutX="69.0" layoutY="401.0" onMouseClicked="#purchasePotion" text="Cost:    ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="308.0" layoutY="232.0" text="Random Treasure">
+      <Label layoutX="308.0" layoutY="232.0" onMouseClicked="#purchaseTreasure" text="Random Treasure">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="308.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="treasureCost" layoutX="308.0" layoutY="401.0" text="Cost:    ">
+      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="308.0" layoutY="271.0" onMouseClicked="#purchaseTreasure" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="treasureCost" layoutX="308.0" layoutY="401.0" onMouseClicked="#purchaseTreasure" text="Cost:    ">
          <font>
             <Font size="20.0" />
          </font>

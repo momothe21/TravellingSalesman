@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="gameWindow" onKeyPressed="#rollDiceKey" prefHeight="510.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="gameWindow" onKeyPressed="#rollDiceKey" onMouseEntered="#inp" prefHeight="510.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Button fx:id="ReturntoMenu" focusTraversable="false" layoutX="513.0" layoutY="447.0" mnemonicParsing="false" onAction="#switchSceneToMenu" text="Quit to Menu">
             <font>
