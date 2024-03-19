@@ -58,13 +58,15 @@ public class StatsController {
     //method to update labels with values
     @FXML
     protected void display(){
-        String wealth1, wealth2;
+        String wealth1, wealth2,power1,power2;
         wealth1 = String.format("%.1f",getP1Wealth());
         wealth2 = String.format("%.1f",getP2Wealth());
+        power1 = String.format("%.1f",getP1Power());
+        power2 = String.format("%.1f",getP2Power());
         //displaying the labels
         questImage.setImage(getQuest().getTreasurePic());
-        p1PowerLabel.setText(""+getP1Power());
-        p2PowerLabel.setText(""+getP2Power());
+        p1PowerLabel.setText(power1);
+        p2PowerLabel.setText(power2);
         p1WealthLabel.setText(wealth1);
         p2WealthLabel.setText(wealth2);
         p1ScoreLabel.setText(""+getP1Score());

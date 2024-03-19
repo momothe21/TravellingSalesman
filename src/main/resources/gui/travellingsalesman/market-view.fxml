@@ -64,35 +64,35 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="69.0" layoutY="232.0" onMouseClicked="#purchasePotion" text="Recovery potion">
+      <Label layoutX="64.0" layoutY="232.0" onMouseClicked="#purchasePotion" text="Recovery potion">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="159.0" fitWidth="176.0" layoutX="91.0" layoutY="258.0" onMouseClicked="#purchasePotion" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="159.0" fitWidth="176.0" layoutX="86.0" layoutY="258.0" onMouseClicked="#purchasePotion" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/market/potion.png" />
          </image></ImageView>
-      <Label fx:id="potionCost" layoutX="69.0" layoutY="401.0" onMouseClicked="#purchasePotion" text="Cost:    ">
+      <Label fx:id="potionCost" layoutX="64.0" layoutY="401.0" onMouseClicked="#purchasePotion" text="Cost:    ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="308.0" layoutY="232.0" onMouseClicked="#purchaseTreasure" text="Random Treasure">
+      <Label layoutX="303.0" layoutY="232.0" onMouseClicked="#purchaseTreasure" text="Random Treasure">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="149.0" fitWidth="233.0" layoutX="308.0" layoutY="271.0" onMouseClicked="#purchaseTreasure" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="149.0" fitWidth="233.0" layoutX="303.0" layoutY="271.0" onMouseClicked="#purchaseTreasure" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/market/treasure.png" />
          </image></ImageView>
-      <Label fx:id="treasureCost" layoutX="308.0" layoutY="401.0" onMouseClicked="#purchaseTreasure" text="Cost:    ">
+      <Label fx:id="treasureCost" layoutX="303.0" layoutY="401.0" onMouseClicked="#purchaseTreasure" text="Cost:    ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="marketMessage" layoutX="19.0" layoutY="440.0" prefHeight="70.0" prefWidth="569.0">
+      <Label fx:id="marketMessage" layoutX="19.0" layoutY="462.0" prefHeight="70.0" prefWidth="569.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -102,5 +102,20 @@
             <Font size="28.0" />
          </font>
       </Button>
+      <Label fx:id="Power1" layoutX="236.0" layoutY="438.0" onMouseClicked="#purchaseBow" text="Power: ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="Wealth1" layoutX="388.0" layoutY="438.0" onMouseClicked="#purchaseBow" text="Wealth: ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="438.0" onMouseClicked="#purchaseBow" text="Player stats:">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

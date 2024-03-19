@@ -14,10 +14,12 @@ public class MarketController{
     private ArrayList<Treasures> treasures = new ArrayList<Treasures>();
     private Stage stage2;
     private Player player;
+    String playerPower;
+    String playerWealth;
     @FXML
-    private Label swordPower, hammerPower, bowPower, swordCost, hammerCost, bowCost, potionCost, treasureCost, marketMessage;
+    private Label swordPower, hammerPower, bowPower, swordCost, hammerCost, bowCost, potionCost, treasureCost, marketMessage, Power1, Wealth1;
     private double sPower, hPower, bPower, sCost, hCost, bCost, pCost, tCost;
-    private int turns;
+    private int turns,counter;
     private boolean numbersGenerated;
 
     //method to set market info
@@ -26,6 +28,8 @@ public class MarketController{
         String sPowerString = String.format("%.1f", sPower);
         String bPowerString = String.format("%.1f", bPower);
         String hPowerString = String.format("%.1f", hPower);
+        playerPower = String.format("%.1f", player.getPower());
+        playerWealth = String.format("%.1f", player.getWealth());
 
         swordPower.setText("Power: "+ sPowerString);
         hammerPower.setText("Power: "+ hPowerString);
@@ -37,17 +41,20 @@ public class MarketController{
         potionCost.setText("Cost:    "+pCost);
         treasureCost.setText("Cost:    "+ tCost);
 
+        Power1.setText("Power: "+playerPower);
+        Wealth1.setText("Wealth: "+ playerWealth);
+
     }
 
     public double[] shopGenerator(Random random) {
-        sCost = random.nextInt(301-100)+100;
-        hCost = random.nextInt(301-100)+100;
-        bCost = random.nextInt(301-100)+100;
-        pCost = random.nextInt(301-100)+100;
-        tCost = random.nextInt(301-200)+200;
-        sPower = sCost * 0.1;
-        hPower = hCost * 0.1;
-        bPower = bCost * 0.1;
+        sCost = random.nextInt(36-20)+20;
+        hCost = random.nextInt(51-35)+35;
+        bCost = random.nextInt(66-50)+50;
+        pCost = random.nextInt(31-20)+20;
+        tCost = 50;
+        sPower = sCost * 0.5;
+        hPower = hCost * 0.5;
+        bPower = bCost * 0.5;
         return new double[] {sCost, hCost, bCost, pCost, tCost, sPower, hPower, bPower};
     }
 
@@ -57,9 +64,9 @@ public class MarketController{
         bCost = values[2];
         pCost = values[3];
         tCost = values[4];
-        sPower = sCost * 0.1;
-        hPower = hCost * 0.1;
-        bPower = bCost * 0.1;
+        sPower = sCost * 0.5;
+        hPower = hCost * 0.5;
+        bPower = bCost * 0.5;
     }
 
     //method to purchase treasure location
@@ -67,19 +74,26 @@ public class MarketController{
     protected void purchaseTreasure(MouseEvent event){
         Random r = new Random();
         int treasureNum;
-        while(true){
-            treasureNum = r.nextInt(treasures.size());
-            if(tCost <= player.getWealth()){
-                if(!player.getPlayerPath().contains(treasures.get(treasureNum).getLocation())){
-                    player.setWealth(-tCost);
-                    player.getPlayerPath().add(treasures.get(treasureNum).getLocation());
-                    player.getPlayerPathMap().add(treasures.get(treasureNum).getLocation());
-                    marketMessage.setText("Purchased "+treasures.get(treasureNum).getName()+" location successfully");
+        if(counter<8){
+            while(true){
+                treasureNum = r.nextInt(treasures.size());
+                if(tCost <= player.getWealth()){
+                    if(!player.getPlayerPath().contains(treasures.get(treasureNum).getLocation())){
+                        player.setWealth(-tCost);
+                        player.getPlayerPath().add(treasures.get(treasureNum).getLocation());
+                        player.getPlayerPathMap().add(treasures.get(treasureNum).getLocation());
+                        marketMessage.setText("Purchased "+treasures.get(treasureNum).getName()+" location successfully");
+                        counter++;
+                        playerPower = String.format("%.1f", player.getPower());
+                        playerWealth = String.format("%.1f", player.getWealth());
+                        Power1.setText("Power: "+playerPower);
+                        Wealth1.setText("Wealth: "+ playerWealth);
+                        break;
+                    }
+                }else {
+                    marketMessage.setText("Insufficient funds");
                     break;
                 }
-            }else {
-                marketMessage.setText("Insufficient funds");
-                break;
             }
         }
     }
@@ -92,6 +106,10 @@ public class MarketController{
                 player.setWealth(-pCost);
                 player.setPower(-player.getPower()+10+ player.getItemPower());
                 marketMessage.setText("Purchased recovery potion successfully");
+                playerPower = String.format("%.1f", player.getPower());
+                playerWealth = String.format("%.1f", player.getWealth());
+                Power1.setText("Power: "+playerPower);
+                Wealth1.setText("Wealth: "+ playerWealth);
             }else {
                 marketMessage.setText("Insufficient funds");
             }
@@ -136,6 +154,10 @@ public class MarketController{
             player.setItemPower(itemPower);
             player.setWeapon(weapons);
             marketMessage.setText("Purchased weapon successfully");
+            playerPower = String.format("%.1f", player.getPower());
+            playerWealth = String.format("%.1f", player.getWealth());
+            Power1.setText("Power: "+playerPower);
+            Wealth1.setText("Wealth: "+ playerWealth);
         }else {
             marketMessage.setText("Insufficient funds...");
         }

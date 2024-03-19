@@ -765,7 +765,7 @@ public class GameController {
 
                     //checking if the current location is special
                     if(EventController.isItem(newcoords)){
-                        loot = lootValue.nextInt(100)+1;
+                        loot = lootValue.nextInt(101-10)+10;
                         currPlayer.setWealth(loot);
                         Message.setText("You encountered treasure worth $"+ loot);
                         blueCells.remove(currPlayer.getPlayerCoords());
@@ -775,12 +775,14 @@ public class GameController {
                             currPlayer.setWealth(quest.getScore());
                             currPlayer.setScore(1);
                             if(!valuables.isEmpty()){
-                                setQuest();
                                 valuables.remove(quest);
                                 greenCells.remove(quest.getLocation());
-                                //removing the quest location from player path
-                                player1.getPlayerPath().remove(quest.getLocation());
-                                player2.getPlayerPath().remove(quest.getLocation());
+                                if(!valuables.isEmpty()){
+                                    setQuest();
+                                    //removing the quest location from player path
+                                    player1.getPlayerPath().remove(quest.getLocation());
+                                    player2.getPlayerPath().remove(quest.getLocation());
+                                }
                             }else{
                                 if(player1.getScore()> player2.getScore()){
                                     winner = player1;
@@ -958,7 +960,7 @@ public class GameController {
         String wealth,power;
         //formatting the wealth and power
         wealth = String.format("%.1f", player.getWealth());
-        power = String.format("%.1f", (player.getPower()+player.getItemPower()));
+        power = String.format("%.1f", (player.getPower()));
         scoreLabel.setText(""+player.getScore());
         wealthLabel.setText(wealth);
         powerLabel.setText(power);
