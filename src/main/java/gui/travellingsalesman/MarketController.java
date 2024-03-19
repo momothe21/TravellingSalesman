@@ -19,7 +19,7 @@ public class MarketController{
     @FXML
     private Label swordPower, hammerPower, bowPower, swordCost, hammerCost, bowCost, potionCost, treasureCost, marketMessage, Power1, Wealth1;
     private double sPower, hPower, bPower, sCost, hCost, bCost, pCost, tCost;
-    private int turns,counter;
+    private int turns,counter, times;
     private boolean numbersGenerated;
 
     //method to set market info
@@ -72,30 +72,42 @@ public class MarketController{
     //method to purchase treasure location
     @FXML
     protected void purchaseTreasure(MouseEvent event){
+        boolean flag=true;
         Random r = new Random();
         int treasureNum;
-        if(counter<8){
             while(true){
-                treasureNum = r.nextInt(treasures.size());
-                if(tCost <= player.getWealth()){
-                    if(!player.getPlayerPath().contains(treasures.get(treasureNum).getLocation())){
-                        player.setWealth(-tCost);
-                        player.getPlayerPath().add(treasures.get(treasureNum).getLocation());
-                        player.getPlayerPathMap().add(treasures.get(treasureNum).getLocation());
-                        marketMessage.setText("Purchased "+treasures.get(treasureNum).getName()+" location successfully");
-                        counter++;
-                        playerPower = String.format("%.1f", player.getPower());
-                        playerWealth = String.format("%.1f", player.getWealth());
-                        Power1.setText("Power: "+playerPower);
-                        Wealth1.setText("Wealth: "+ playerWealth);
+                if(counter<treasures.size() && times ==1){
+                    treasureNum = r.nextInt(treasures.size());
+                    if(tCost <= player.getWealth()){
+                        if(!player.getPlayerPath().contains(treasures.get(treasureNum).getLocation())){
+                            player.setWealth(-tCost);
+                            player.getPlayerPath().add(treasures.get(treasureNum).getLocation());
+                            player.getPlayerPathMap().add(treasures.get(treasureNum).getLocation());
+                            marketMessage.setText("Purchased "+treasures.get(treasureNum).getName()+" location successfully");
+                            times++;
+                            counter++;
+                            //updating player info
+                            playerPower = String.format("%.1f", player.getPower());
+                            playerWealth = String.format("%.1f", player.getWealth());
+                            Power1.setText("Power: "+playerPower);
+                            Wealth1.setText("Wealth: "+ playerWealth);
+                            break;
+                        }
+                    }else {
+                        marketMessage.setText("Insufficient funds");
                         break;
                     }
                 }else {
-                    marketMessage.setText("Insufficient funds");
+                    if(times==2){
+                        marketMessage.setText("Unfortunately can not buy treasure right now...\nMay reset in the next turn");
+                    }else{
+                        marketMessage.setText("Currently possessed treasure locations have been purchased.\nTry again later!");
+                    }
                     break;
                 }
+
             }
-        }
+
     }
 
     //method to use recovery potion
@@ -210,5 +222,13 @@ public class MarketController{
 
     public void setNumbersGenerated(boolean numbersGenerated) {
         this.numbersGenerated = numbersGenerated;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 }

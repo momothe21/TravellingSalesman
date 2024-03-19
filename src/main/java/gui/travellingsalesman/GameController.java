@@ -36,7 +36,7 @@ import java.util.Random;
 public class GameController {
     // Attributes and references
     private double[] shopValues;
-    private boolean isFirst;
+    private boolean isFirst, isSecond;
     private static Stage stage;
     private Parent root;
     private Scene main;
@@ -121,28 +121,28 @@ public class GameController {
         int num = 0;
         switch (type){
             case 1:
-                num = 200;
-                break;
-            case 2:
-                num = 500;
-                break;
-            case 3:
-                num = 400;
-                break;
-            case 4:
-                num = 600;
-                break;
-            case 5:
-                num = 700;
-                break;
-            case 6:
                 num = 100;
                 break;
+            case 2:
+                num = 250;
+                break;
+            case 3:
+                num = 200;
+                break;
+            case 4:
+                num = 300;
+                break;
+            case 5:
+                num = 350;
+                break;
+            case 6:
+                num = 50;
+                break;
             case 7:
-                num = 800;
+                num = 400;
                 break;
             case 8:
-                num = 300;
+                num = 150;
                 break;
             default:
                 System.out.println("Random number fo score out of range.");
@@ -221,43 +221,45 @@ public class GameController {
                 //rectangle creation
                 Rectangle cell = new Rectangle(35, 35);
 
-                //random number
-                color= r.nextInt(100);
+                //setting the castle location
+                if(i==5 && j == 5){
+                    cell.setFill(yellow);
+                    yellowCells.add(new Coords(i,j));
+                }else {
 
-                //making sure to leave spawn points alone
-                if((new Coords(i,j)).distanceCalc(playerSpawn)>1){
-                    //random creation
-                    //for black
-                    if((color >=1 && color <=10)){
-                        //checking distance between blacks
-                        if(bc>0&&((new Coords(i,j)).distanceCalc(blackCells)>1)){
-                            cell.setFill(black);
-                            blackCells.add(new Coords(i,j));
-                            bc++;
-                        }else if(bc == 0){
-                            cell.setFill(black);
-                            blackCells.add(new Coords(i,j));
-                            bc++;
-                        }else{
-                            //setting it to default free space
+                    //random number
+                    color= r.nextInt(100);
+
+                    //making sure to leave spawn points alone
+                    if((new Coords(i,j)).distanceCalc(playerSpawn)>1){
+                        //random creation
+                        //for black
+                        if((color >=1 && color <=10)){
+                            //checking distance between blacks
+                            if(bc>0&&((new Coords(i,j)).distanceCalc(blackCells)>1)){
+                                cell.setFill(black);
+                                blackCells.add(new Coords(i,j));
+                                bc++;
+                            }else if(bc == 0){
+                                cell.setFill(black);
+                                blackCells.add(new Coords(i,j));
+                                bc++;
+                            }else{
+                                //setting it to default free space
+                                cell.setFill(free);
+                            }
+                            //setting traps
+                        }else if (color>=32 && color<=42) {
+                            cell.setFill(red);
+                            redCells.add(new Coords(i,j));
+                            redCellsPath.add(new Coords(i,j));
+                        }else {
+                            //default
                             cell.setFill(free);
                         }
-                        //setting traps
-                    }else if (color>=32 && color<=42) {
-                        cell.setFill(red);
-                        redCells.add(new Coords(i,j));
-                        redCellsPath.add(new Coords(i,j));
-                    }else {
-                        //default
+                    }else{
                         cell.setFill(free);
                     }
-                    //setting the castle location
-                    if(i==5 && j == 5){
-                        cell.setFill(yellow);
-                        yellowCells.add(new Coords(i,j));
-                    }
-                }else{
-                    cell.setFill(free);
                 }
 
                 //saving and appending map
@@ -396,11 +398,11 @@ public class GameController {
         setQuest();
 
         //making the map "invisible"
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j<10;j++){
-                cells[i][j].setFill(free);
-            }
-        }
+//        for(int i = 0; i < 10; i++){
+//            for(int j = 0; j<10;j++){
+//                cells[i][j].setFill(free);
+//            }
+//        }
 
     }
 
@@ -459,6 +461,7 @@ public class GameController {
             turn.setText("Player 2");
             displayStats(player2);
             updateMiniMap(player2);
+            isSecond=true;
         }else{
             turn.setText("Player 1");
             displayStats(player1);
@@ -771,7 +774,7 @@ public class GameController {
                         blueCells.remove(currPlayer.getPlayerCoords());
                         cells[currPlayer.getPlayerCoords().getX()][currPlayer.getPlayerCoords().getY()].setFill(free);
                     }else if(EventController.isCastle(newcoords)){
-                        if(currPlayer.getPlayerPath().contains(quest.getLocation())&&cells[quest.getLocation().getX()][quest.getLocation().getY()].getFill()==free){
+                        if(currPlayer.getPlayerPath().contains(quest.getLocation())){
                             currPlayer.setWealth(quest.getScore());
                             currPlayer.setScore(1);
                             if(!valuables.isEmpty()){
@@ -1065,6 +1068,11 @@ public class GameController {
             if(isFirst){
                 shopValues = marketController.shopGenerator(random);
                 isFirst=false;
+                marketController.setTimes(1);
+            }
+            if(isSecond){
+                marketController.setTimes(1);
+                isSecond = false;
             }
             marketController.setShopValues(shopValues);
             marketController.display();
