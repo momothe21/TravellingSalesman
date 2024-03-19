@@ -83,7 +83,7 @@ public class StatsController {
                     p1WeaponImage.setImage(new Image("Bow.png"));
                     break;
                 case Sword:
-                    p1WeaponImage.setImage(new Image("sword.png"));
+                    p1WeaponImage.setImage(new Image("Sword.png"));
                     break;
                 case Hammer:
                     p1WeaponImage.setImage(new Image("hammer.png"));
@@ -99,7 +99,7 @@ public class StatsController {
                     p2WeaponImage.setImage(new Image("Bow.png"));
                     break;
                 case Sword:
-                    p2WeaponImage.setImage(new Image("sword.png"));
+                    p2WeaponImage.setImage(new Image("Sword.png"));
                     break;
                 case Hammer:
                     p2WeaponImage.setImage(new Image("hammer.png"));

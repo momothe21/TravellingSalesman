@@ -44,7 +44,7 @@ public class MarketController{
         hCost = random.nextInt(301-100)+100;
         bCost = random.nextInt(301-100)+100;
         pCost = random.nextInt(301-100)+100;
-        tCost = random.nextInt(301-100)+100;
+        tCost = random.nextInt(301-200)+200;
         sPower = sCost * 0.1;
         hPower = hCost * 0.1;
         bPower = bCost * 0.1;
@@ -66,14 +66,21 @@ public class MarketController{
     @FXML
     protected void purchaseTreasure(MouseEvent event){
         Random r = new Random();
-        int treasureNum = r.nextInt(treasures.size());
-        if(tCost <= player.getWealth()){
-            player.setWealth(-tCost);
-            player.getPlayerPath().add(treasures.get(treasureNum).getLocation());
-            player.getPlayerPathMap().add(treasures.get(treasureNum).getLocation());
-            marketMessage.setText("Purchased "+treasures.get(treasureNum).getName()+" location successfully");
-        }else {
-            marketMessage.setText("Insufficient funds");
+        int treasureNum;
+        while(true){
+            treasureNum = r.nextInt(treasures.size());
+            if(tCost <= player.getWealth()){
+                if(!player.getPlayerPath().contains(treasures.get(treasureNum).getLocation())){
+                    player.setWealth(-tCost);
+                    player.getPlayerPath().add(treasures.get(treasureNum).getLocation());
+                    player.getPlayerPathMap().add(treasures.get(treasureNum).getLocation());
+                    marketMessage.setText("Purchased "+treasures.get(treasureNum).getName()+" location successfully");
+                    break;
+                }
+            }else {
+                marketMessage.setText("Insufficient funds");
+                break;
+            }
         }
     }
 
@@ -97,8 +104,7 @@ public class MarketController{
     @FXML
     protected void purchaseSword(MouseEvent event){
         if(sPower > player.getItemPower()&&player.getWeapon()!= Player.Weapons.Sword){
-            statsUpdateWeapon(sPower,sCost);
-            player.setWeapon(Player.Weapons.Sword);
+            statsUpdateWeapon(sPower,sCost, Player.Weapons.Sword);
         }else {
             marketMessage.setText("Careful! You already own this weapon\n or a weapon that is better.");
         }
@@ -107,8 +113,7 @@ public class MarketController{
     @FXML
     protected void purchaseBow(MouseEvent event){
         if(bPower > player.getItemPower()&&player.getWeapon()!= Player.Weapons.Bow){
-            statsUpdateWeapon(bPower,bCost);
-            player.setWeapon(Player.Weapons.Bow);
+            statsUpdateWeapon(bPower,bCost, Player.Weapons.Bow);
         }else {
             marketMessage.setText("Careful! You already own this weapon\n or a weapon that is better.");
         }
@@ -117,19 +122,19 @@ public class MarketController{
     @FXML
     protected void purchaseHammer(MouseEvent event){
         if(hPower > player.getItemPower()&&player.getWeapon()!= Player.Weapons.Hammer){
-            statsUpdateWeapon(hPower,hCost);
-            player.setWeapon(Player.Weapons.Hammer);
+            statsUpdateWeapon(hPower,hCost,Player.Weapons.Hammer);
         }else {
             marketMessage.setText("Careful! You already own this weapon\n or a weapon that is better.");
         }
     }
 
     //method to update the players stats
-    protected void statsUpdateWeapon(double itemPower, double cost){
+    protected void statsUpdateWeapon(double itemPower, double cost, Player.Weapons weapons){
         if(cost <= player.getWealth()){
             player.setWealth(-cost);
             player.setPower(-player.getItemPower()+itemPower);
             player.setItemPower(itemPower);
+            player.setWeapon(weapons);
             marketMessage.setText("Purchased weapon successfully");
         }else {
             marketMessage.setText("Insufficient funds...");

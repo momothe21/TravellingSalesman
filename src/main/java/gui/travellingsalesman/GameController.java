@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -191,7 +190,7 @@ public class GameController {
                     break;
                 case 5:
                     treasure.setName(Treasures.treasure.JewelEncrustedSword);
-                    treasure.setTreasurePic(new Image("sword.png"));
+                    treasure.setTreasurePic(new Image("jewelSword.png"));
                     break;
                 case 6:
                     treasure.setName(Treasures.treasure.PaladinsShield);
@@ -676,44 +675,44 @@ public class GameController {
                     switch (direction){
                         case UP, W:
                             //this is for section 7.2.1
-                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()-1))){
-                                if(alert.showAndWait().get() == ButtonType.OK){
-                                    currPlayer.move(0,-1);
-                                }
-                            }else {
-                                currPlayer.move(0,-1);
-                            }
-//                            currPlayer.move(0,-1);
+//                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()-1))){
+//                                if(alert.showAndWait().get() == ButtonType.OK){
+//                                    currPlayer.move(0,-1);
+//                                }
+//                            }else {
+//                                currPlayer.move(0,-1);
+//                            }
+                            currPlayer.move(0,-1);
                             break;
                         case DOWN, S:
-                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()+1))){
-                                if(alert.showAndWait().get() == ButtonType.OK){
-                                    currPlayer.move(0,1);
-                                }
-                            }else {
-                                currPlayer.move(0,1);
-                            }
-                            //currPlayer.move(0,1);
+//                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX(),currPlayer.getPlayerCoords().getY()+1))){
+//                                if(alert.showAndWait().get() == ButtonType.OK){
+//                                    currPlayer.move(0,1);
+//                                }
+//                            }else {
+//                                currPlayer.move(0,1);
+//                            }
+                            currPlayer.move(0,1);
                             break;
                         case LEFT, A:
-                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()-1,currPlayer.getPlayerCoords().getY()))){
-                                if(alert.showAndWait().get() == ButtonType.OK){
-                                    currPlayer.move(-1,0);
-                                }
-                            }else {
-                                currPlayer.move(-1,0);
-                            }
-//                            currPlayer.move(-1,0);
+//                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()-1,currPlayer.getPlayerCoords().getY()))){
+//                                if(alert.showAndWait().get() == ButtonType.OK){
+//                                    currPlayer.move(-1,0);
+//                                }
+//                            }else {
+//                                currPlayer.move(-1,0);
+//                            }
+                            currPlayer.move(-1,0);
                             break;
                         case RIGHT, D:
-                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()+1,currPlayer.getPlayerCoords().getY()-1))){
-                                if(alert.showAndWait().get() == ButtonType.OK){
-                                    currPlayer.move(1,0);
-                                }
-                            }else {
-                                currPlayer.move(1,0);
-                            }
-//                            currPlayer.move(1,0);
+//                            if(currPlayer.getPlayerPath().contains(new Coords(currPlayer.getPlayerCoords().getX()+1,currPlayer.getPlayerCoords().getY()-1))){
+//                                if(alert.showAndWait().get() == ButtonType.OK){
+//                                    currPlayer.move(1,0);
+//                                }
+//                            }else {
+//                                currPlayer.move(1,0);
+//                            }
+                            currPlayer.move(1,0);
                             break;
                         default:
                             break;
@@ -826,8 +825,8 @@ public class GameController {
                             switch (loot){
                                 case 1:
                                     lost = lootValue.nextInt(6)+1;
-                                    if(getMoves()>0){
-                                        moves--;
+                                    if(getMoves()>lost){
+                                        moves=moves-lost;
                                         Message.setText("You encountered a trap and got injured\nMoves reduced by "+ lost);
                                         loop++;
                                     }
@@ -901,6 +900,10 @@ public class GameController {
                                 dead.getSelf().setLayoutY(143);
                                 gameWindow.getChildren().add(dead.getSelf());
                             }
+                            //removing the players weapon
+                            dead.setWeapon(null);
+                            dead.setItemPower(0);
+
                             //removing the dead players treasure if they have it
                             if(dead.getPlayerPath().contains(quest.getLocation())){
                                 dead.getPlayerPath().remove(quest.getLocation());
@@ -909,7 +912,6 @@ public class GameController {
                                 survivor.getPlayerPath().add(quest.getLocation());
                                 Message.setText("Player "+ survivor.getPlayernum()+" stole the map location.\nThey can now give the location to the castle.");
                             }
-                            dead.setWeapon(null);
                         }
                     }
                 }
@@ -950,7 +952,7 @@ public class GameController {
                     weapon.setImage(new Image("Bow.png"));
                     break;
                 case Sword:
-                    weapon.setImage(new Image("sword.png"));
+                    weapon.setImage(new Image("Sword.png"));
                     break;
                 case Hammer:
                     weapon.setImage(new Image("hammer.png"));

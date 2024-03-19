@@ -70,7 +70,7 @@
     </ImageView>
     <ImageView fitHeight="61.0" fitWidth="78.0" layoutX="515.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../images/weapons/sword.png" />
+            <Image url="@../../images/weapons/Sword.png" />
         </image>
     </ImageView>
    <Circle fx:id="player1" fill="#f2dda6" layoutX="384.0" layoutY="370.0" radius="17.5" stroke="BLACK" strokeType="INSIDE" />
