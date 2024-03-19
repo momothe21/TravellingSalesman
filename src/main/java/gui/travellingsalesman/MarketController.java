@@ -16,14 +16,30 @@ public class MarketController{
     private Player player;
     @FXML
     private Label swordPower, hammerPower, bowPower, swordCost, hammerCost, bowCost, potionCost, treasureCost, marketMessage;
-    double sPower, hPower, bPower, sCost, hCost, bCost, pCost, tCost;
-    String sPowerString, hPowerString, bPowerString;
+    private double sPower, hPower, bPower, sCost, hCost, bCost, pCost, tCost;
+    private int turns;
+    private boolean numbersGenerated;
 
     //method to set market info
     protected void display(){
-        Random random = new Random();
+        //displaying
+        String sPowerString = String.format("%.1f", sPower);
+        String bPowerString = String.format("%.1f", bPower);
+        String hPowerString = String.format("%.1f", hPower);
 
-        //updating the shop prices
+        swordPower.setText("Power: "+ sPowerString);
+        hammerPower.setText("Power: "+ hPowerString);
+        bowPower.setText("Power: "+ bPowerString);
+
+        swordCost.setText("Cost:    "+sCost);
+        hammerCost.setText("Cost:    "+hCost);
+        bowCost.setText("Cost:    "+bCost);
+        potionCost.setText("Cost:    "+pCost);
+        treasureCost.setText("Cost:    "+ tCost);
+
+    }
+
+    public double[] shopGenerator(Random random) {
         sCost = random.nextInt(301-100)+100;
         hCost = random.nextInt(301-100)+100;
         bCost = random.nextInt(301-100)+100;
@@ -32,23 +48,18 @@ public class MarketController{
         sPower = sCost * 0.1;
         hPower = hCost * 0.1;
         bPower = bCost * 0.1;
+        return new double[] {sCost, hCost, bCost, pCost, tCost, sPower, hPower, bPower};
+    }
 
-
-        //displaying
-        sPowerString = String.format("%.1f",sPower);
-        bPowerString = String.format("%.1f",bPower);
-        hPowerString = String.format("%.1f",hPower);
-
-        swordPower.setText("Power: "+sPowerString);
-        hammerPower.setText("Power: "+hPowerString);
-        bowPower.setText("Power: "+bPowerString);
-
-        swordCost.setText("Cost:    "+sCost);
-        hammerCost.setText("Cost:    "+hCost);
-        bowCost.setText("Cost:    "+bCost);
-        potionCost.setText("Cost:    "+pCost);
-        treasureCost.setText("Cost:    "+ tCost);
-
+    public void setShopValues(double[] values){
+        sCost = values[0];
+        hCost = values[1];
+        bCost = values[2];
+        pCost = values[3];
+        tCost = values[4];
+        sPower = sCost * 0.1;
+        hPower = hCost * 0.1;
+        bPower = bCost * 0.1;
     }
 
     //method to purchase treasure location
@@ -156,5 +167,21 @@ public class MarketController{
 
     public void setTreasures(ArrayList<Treasures> treasures) {
         this.treasures = treasures;
+    }
+
+    public int getTurns() {
+        return turns;
+    }
+
+    public void setTurns(int turns) {
+        this.turns = turns;
+    }
+
+    public boolean isNumbersGenerated() {
+        return numbersGenerated;
+    }
+
+    public void setNumbersGenerated(boolean numbersGenerated) {
+        this.numbersGenerated = numbersGenerated;
     }
 }

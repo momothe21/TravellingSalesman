@@ -35,6 +35,9 @@ import java.util.Random;
 //game controller
 public class GameController {
     // Attributes and references
+
+    private double[] shopValues;
+    private boolean isFirst;
     private static Stage stage;
     private Parent root;
     private Scene main;
@@ -51,6 +54,8 @@ public class GameController {
 
     @FXML
     private Button ReturntoMenu;
+
+    private MarketController marketController;
 
     @FXML
     private Circle playerOne;
@@ -451,6 +456,7 @@ public class GameController {
             turn.setText("Player 1");
             displayStats(player1);
             updateMiniMap(player1);
+            isFirst=true;
         }
 
         //setting the rolled image
@@ -1001,6 +1007,7 @@ public class GameController {
     //method to open a market window
     @FXML
     protected void marketShop(ActionEvent event) throws IOException{
+        Random random = new Random();
         Player player;
         if(turns %2==0){
             player = player2;
@@ -1022,10 +1029,16 @@ public class GameController {
             stage2.show();
             stage.getScene().getWindow();
             stage.getScene().getWindow().hide();
-            MarketController marketController = loader1.getController();
+            marketController = loader1.getController();
             marketController.setPlayer(player);
             marketController.setStage2(stage2);
             marketController.setTreasures(valuables);
+            marketController.setTurns(turns);
+            if(isFirst){
+                shopValues = marketController.shopGenerator(random);
+                isFirst=false;
+            }
+            marketController.setShopValues(shopValues);
             marketController.display();
         }else {
             Message.setText("Can not access shop, need to be in market!");
