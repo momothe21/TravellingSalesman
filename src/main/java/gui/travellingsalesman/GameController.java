@@ -398,11 +398,11 @@ public class GameController {
         setQuest();
 
         //making the map "invisible"
-//        for(int i = 0; i < 10; i++){
-//            for(int j = 0; j<10;j++){
-//                cells[i][j].setFill(free);
-//            }
-//        }
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j<10;j++){
+                cells[i][j].setFill(free);
+            }
+        }
 
     }
 
