@@ -150,5 +150,10 @@
             <Font size="16.0" />
          </font>
       </Label>
+      <Label fx:id="movesLabel" layoutX="404.0" layoutY="63.0" text="Moves: 0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

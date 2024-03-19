@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,7 +35,6 @@ import java.util.Random;
 //game controller
 public class GameController {
     // Attributes and references
-
     private double[] shopValues;
     private boolean isFirst;
     private static Stage stage;
@@ -65,7 +65,7 @@ public class GameController {
     private Button btnDice;
 
     @FXML
-    private Label Message;
+    private Label Message, movesLabel;
     @FXML
     private ImageView diceImage, weapon, questImage;
     @FXML
@@ -396,11 +396,11 @@ public class GameController {
         setQuest();
 
         //making the map "invisible"
-//        for(int i = 0; i < 10; i++){
-//            for(int j = 0; j<10;j++){
-//                cells[i][j].setFill(free);
-//            }
-//        }
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j<10;j++){
+                cells[i][j].setFill(free);
+            }
+        }
 
     }
 
@@ -492,6 +492,7 @@ public class GameController {
                 break;
         }
         Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
+        movesLabel.setText("Moves: "+moves);
         btnDice.setDisable(false);
     }
 
@@ -627,6 +628,7 @@ public class GameController {
                 currPlayer.spawn(mainMap);
                 moves--;
                 Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
+                movesLabel.setText("Moves: "+moves);
             }
         }
     }
@@ -635,18 +637,20 @@ public class GameController {
     @FXML
     public void inp(MouseEvent event){
         mainMap.requestFocus();
-        mainMap.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                movingPlayer(keyEvent.getCode());
+        if(winner == null){
+            mainMap.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    movingPlayer(keyEvent.getCode());
+                }
+            });
+            if(turns%2==0){
+                displayStats(player2);
+                updateMiniMap(player2);
+            }else {
+                displayStats(player1);
+                updateMiniMap(player1);
             }
-        });
-        if(turns%2==0){
-            displayStats(player2);
-            updateMiniMap(player2);
-        }else {
-            displayStats(player1);
-            updateMiniMap(player1);
         }
     }
 
@@ -659,19 +663,30 @@ public class GameController {
         alert.setContentText("Are you sure you want to do that?");
         Random lootValue = new Random();
         int loot = 0;
+
+        //initializing the current player, the winning player and the losing player in a fight
         Player currPlayer,survivor = null,dead = null;
+        //deciding the current player
         if(turns %2 ==0){
             currPlayer = player2;
         }else {
             currPlayer = player1;
         }
+
+        //the players position
         Coords currcoords = currPlayer.getPlayerCoords();
+
+        //temp coords to check for things like obstacles
         Coords newcoords;
         Coords special = new Coords(0,0);
 
+        //checking if player is in map
         if(mainMap.getChildren().contains(currPlayer.getSelf())){
+            //checking if player has any moves left
             if(moves != 0){
+                //checking if the player can move over there
                 if(EventController.canMove(currcoords,direction)){
+                    //deciding direction
                     switch (direction){
                         case UP, W:
                             //this is for section 7.2.1
@@ -737,7 +752,7 @@ public class GameController {
                         default:
                             break;
                     }
-                    currPlayer.getPlayerPath().add(special);
+                    //adding black tile to player minimap
                     currPlayer.getPlayerPathMap().add(special);
                 }
                 newcoords = currPlayer.getPlayerCoords();
@@ -746,6 +761,7 @@ public class GameController {
                     currPlayer.getPlayerPath().add(newcoords);
                     currPlayer.getPlayerPathMap().add(newcoords);
                     Message.setText("You rolled a "+rolledNum+".\nPlease move "+moves+" tile(s) to end your turn");
+                    movesLabel.setText("Moves: "+moves);
 
                     //checking if the current location is special
                     if(EventController.isItem(newcoords)){
