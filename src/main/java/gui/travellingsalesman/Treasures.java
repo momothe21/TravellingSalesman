@@ -1,5 +1,7 @@
 package gui.travellingsalesman;
 
+import javafx.scene.image.Image;
+
 import java.util.Random;
 
 public class Treasures {
@@ -7,6 +9,7 @@ public class Treasures {
     private treasure name;
     private int score;
     private Coords location;
+    private Image treasurePic;
 
     //overiding the equals method in order to make sure the quest and treasure are the same
     @Override
@@ -50,6 +53,14 @@ public class Treasures {
 
     public void setLocation(Coords location) {
         this.location = location;
+    }
+
+    public Image getTreasurePic() {
+        return treasurePic;
+    }
+
+    public void setTreasurePic(Image treasurePic) {
+        this.treasurePic = treasurePic;
     }
 
     //types of treasures

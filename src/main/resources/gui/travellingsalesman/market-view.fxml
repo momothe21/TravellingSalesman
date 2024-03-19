@@ -69,7 +69,10 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="69.0" layoutY="271.0" onMouseClicked="#purchasePotion" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="159.0" fitWidth="176.0" layoutX="91.0" layoutY="258.0" onMouseClicked="#purchasePotion" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/market/potion.png" />
+         </image></ImageView>
       <Label fx:id="potionCost" layoutX="69.0" layoutY="401.0" onMouseClicked="#purchasePotion" text="Cost:    ">
          <font>
             <Font size="20.0" />
@@ -80,7 +83,10 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="129.0" fitWidth="160.0" layoutX="308.0" layoutY="271.0" onMouseClicked="#purchaseTreasure" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="149.0" fitWidth="233.0" layoutX="308.0" layoutY="271.0" onMouseClicked="#purchaseTreasure" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/market/treasure.png" />
+         </image></ImageView>
       <Label fx:id="treasureCost" layoutX="308.0" layoutY="401.0" onMouseClicked="#purchaseTreasure" text="Cost:    ">
          <font>
             <Font size="20.0" />

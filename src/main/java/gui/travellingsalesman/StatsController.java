@@ -62,6 +62,7 @@ public class StatsController {
         wealth1 = String.format("%.1f",getP1Wealth());
         wealth2 = String.format("%.1f",getP2Wealth());
         //displaying the labels
+        questImage.setImage(getQuest().getTreasurePic());
         p1PowerLabel.setText(""+getP1Power());
         p2PowerLabel.setText(""+getP2Power());
         p1WealthLabel.setText(wealth1);

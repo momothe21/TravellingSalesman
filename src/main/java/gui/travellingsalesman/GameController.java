@@ -68,7 +68,7 @@ public class GameController {
     @FXML
     private Label Message;
     @FXML
-    private ImageView diceImage, weapon;
+    private ImageView diceImage, weapon, questImage;
     @FXML
     private GridPane mainMap, mainMap1;
     protected Rectangle[][] cells = new Rectangle[10][10];
@@ -175,27 +175,35 @@ public class GameController {
             switch (count){
                 case 1:
                     treasure.setName(Treasures.treasure.DiamondRing);
+                    treasure.setTreasurePic(new Image("ring.png"));
                     break;
                 case 2:
                     treasure.setName(Treasures.treasure.CrystalGoblets);
+                    treasure.setTreasurePic(new Image("crystalGoblet.png"));
                     break;
                 case 3:
                     treasure.setName(Treasures.treasure.DragonsScroll);
+                    treasure.setTreasurePic(new Image("dragon.png"));
                     break;
                 case 4:
                     treasure.setName(Treasures.treasure.GoldenGoblet);
+                    treasure.setTreasurePic(new Image("goldenGoblet.png"));
                     break;
                 case 5:
                     treasure.setName(Treasures.treasure.JewelEncrustedSword);
+                    treasure.setTreasurePic(new Image("sword.png"));
                     break;
                 case 6:
                     treasure.setName(Treasures.treasure.PaladinsShield);
+                    treasure.setTreasurePic(new Image("shield.png"));
                     break;
                 case 7:
                     treasure.setName(Treasures.treasure.GoldenKey);
+                    treasure.setTreasurePic(new Image("key.png"));
                     break;
                 case 8:
                     treasure.setName(Treasures.treasure.WoodenBow);
+                    treasure.setTreasurePic(new Image("woodenBow.png"));
                     break;
                 default:
                     System.out.println("type of weapon out of range");
@@ -1122,6 +1130,7 @@ public class GameController {
         quest = valuables.get(num);
         this.quest = quest;
         questLabel.setText(quest.getName().toString());
+        questImage.setImage(quest.getTreasurePic());
     }
 
     public int getTurns() {
