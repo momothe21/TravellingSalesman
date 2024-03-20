@@ -398,11 +398,11 @@ public class GameController {
         setQuest();
 
         //making the map "invisible"
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j<10;j++){
-                cells[i][j].setFill(free);
-            }
-        }
+//        for(int i = 0; i < 10; i++){
+//            for(int j = 0; j<10;j++){
+//                cells[i][j].setFill(free);
+//            }
+//        }
 
     }
 
@@ -786,35 +786,36 @@ public class GameController {
                                     player1.getPlayerPath().remove(quest.getLocation());
                                     player2.getPlayerPath().remove(quest.getLocation());
                                 }
-                            }else{
-                                if(player1.getScore()> player2.getScore()){
-                                    winner = player1;
-                                } else if (player2.getScore()> player1.getScore()) {
-                                    winner = player2;
-                                }else{
-                                    if(player1.getWealth()> player2.getWealth()){
-                                        winner = player1;
-                                    } else if (player2.getWealth()> player1.getWealth()) {
-                                        winner = player2;
-                                    }else{
-                                        if(player1.getPower()> player2.getPower()){
-                                            winner = player1;
-                                        } else if (player2.getPower()> player1.getPower()) {
-                                            winner = player2;
-                                        }
-                                    }
-                                }
-                                if(!(winner == null)){
-                                    Message.setText("Game Over,\nPlayer "+winner.getPlayernum()+" Wins!");
-                                    Message.autosize();
-                                    ReturntoMenu.setText("Claim your Prize");
-                                }else{
-                                    Message.setText("This game ended in a surprising perfect draw!");
-                                }
                             }
                             //resetting the player's path and map
                             currPlayer.setPlayerPath(new ArrayList<Coords>());
                             currPlayer.setPlayerPathMap(new ArrayList<Coords>());
+                        }
+                        if(valuables.isEmpty()){
+                            if(player1.getScore()> player2.getScore()){
+                                winner = player1;
+                            } else if (player2.getScore()> player1.getScore()) {
+                                winner = player2;
+                            }else{
+                                if(player1.getWealth()> player2.getWealth()){
+                                    winner = player1;
+                                } else if (player2.getWealth()> player1.getWealth()) {
+                                    winner = player2;
+                                }else{
+                                    if(player1.getPower()> player2.getPower()){
+                                        winner = player1;
+                                    } else if (player2.getPower()> player1.getPower()) {
+                                        winner = player2;
+                                    }
+                                }
+                            }
+                        }
+                        if(winner != null){
+                            Message.setText("Game Over,\nPlayer "+winner.getPlayernum()+" Wins!");
+                            Message.autosize();
+                            ReturntoMenu.setText("Claim your Prize");
+                        }else if(valuables.isEmpty()){
+                            Message.setText("This game ended in a surprising perfect draw!");
                         }
                     } else if (EventController.isMarket(newcoords)) {
                         Message.setText("You may press buy to look at shop.");
