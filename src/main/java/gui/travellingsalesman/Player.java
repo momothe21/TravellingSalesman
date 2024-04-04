@@ -14,7 +14,7 @@ public class Player{
     private ArrayList<Coords> playerPath=new ArrayList<Coords>();
     private ArrayList<Coords> playerPathMap=new ArrayList<Coords>();
     private double score=0;
-    private double wealth=1000;
+    private double wealth=0;
     private double power=10;
     private double itemPower = 0;
     private Weapons weapon;
